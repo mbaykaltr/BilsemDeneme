@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorA">#7A008577</color>
+    <color name="colorB">#4800574B</color>
+    <color name="colorC">#B8D81B60</color>
+    <color name="colorBeyaz">#FFFFFF</color>
+    <color name="colorseffaf_yesil">#BE404E3A</color>
+    <color name="colorAccentAcikYesil">#BCF161</color>
+    <color name="colorAccentKitapBaslik">#E9ECE4</color>
+    <color name="colorAccentKitapMetin">#D8E2C8</color>
+    <color name="paylas">#F21F1F</color>
+    <color name="turbe_yesili">#21462C</color>
+    <color name="colorseffaf">#00404E3A</color>
+
+</resources>

@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sonuc_ekran"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/sonuc_fon_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bilsem_fon_1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bilsem_fon_1"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MainActivity">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/sonuc_area"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/colorB">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/paylas_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight="0.26">
+
+                    <TextView
+                        android:id="@+id/ayar_paylas_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/ogrenci_ad_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Öğrenci:  Sami Baykal\n"
+                        android:textColor="@color/cardview_light_background"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ayar_paylas_txt" />
+
+                    <TextView
+                        android:id="@+id/sonuc_ozet_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Sonuç özet txt"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorPrimaryDark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ogrenci_ad_txt" />
+
+                    <ImageView
+                        android:id="@+id/mail_paylas_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/whatsapp_paylas_img"
+                        app:layout_constraintStart_toEndOf="@+id/whatsapp_paylas_img"
+                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        tools:ignore="VectorDrawableCompat" />
+
+                    <ImageView
+                        android:id="@+id/whatsapp_paylas_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/paylas_kutusu"
+                        app:layout_constraintStart_toEndOf="@+id/paylas_kutusu"
+                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        tools:ignore="VectorDrawableCompat" />
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/paylas_kutusu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/colorC"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:id="@+id/paylas_icon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginStart="4dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="@+id/textView"
+                            app:srcCompat="@drawable/ic_share_kirmizi"
+                            tools:ignore="VectorDrawableCompat" />
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="Sonucu Paylaş"
+                            android:textColor="@color/colorAccentAcikYesil"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/paylas_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/clRota"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/paylas_kutusu"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sonuc_ozet_txt">
+
+                        <TextView
+                            android:id="@+id/tvRota"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Eser içeriklerini paylaştığı için\nRTY Rota Yayınlarına teşekkür ederiz."
+                            app:layout_constraintBottom_toBottomOf="@+id/imgRota"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/imgRota"
+                            app:layout_constraintTop_toTopOf="@+id/imgRota" />
+
+                        <ImageView
+                            android:id="@+id/imgRota"
+                            android:layout_width="60dp"
+                            android:layout_height="51dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginBottom="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:srcCompat="@drawable/rota" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/karne_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.28">
+
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/clBasari"
+                        android:visibility = "visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/ayar_paylas_txt2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:visibility="invisible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/sonuc_net_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Doğru Sayısı"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ayar_paylas_txt2" />
+
+                        <ProgressBar
+                            android:id="@+id/sonuc_net_bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:max="35"
+                            android:progress="15"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sonuc_net_txt" />
+
+                        <TextView
+                            android:id="@+id/sonuc_puan_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Puan"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sonuc_net_bar" />
+
+                        <ProgressBar
+                            android:id="@+id/puan_Bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:max="750"
+                            android:progress="12"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sonuc_puan_txt" />
+
+                        <TextView
+                            android:id="@+id/sonuc_sira_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="Sıralama"
+                            android:textColor="@color/cardview_light_background"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/puan_Bar" />
+
+                        <ProgressBar
+                            android:id="@+id/sira_bar"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:max="5"
+                            android:progress="4"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/sonuc_sira_txt" />
+
+                        <ScrollView
+                            android:id="@+id/sonuc_ayrinti_scrool"
+                            style="@android:style/Widget.DeviceDefault.Light.ScrollView"
+                            android:layout_width="match_parent"
+
+                            android:layout_height="0dp"
+                            android:fadeScrollbars="false"
+                            android:fadingEdge="horizontal"
+                            android:fadingEdgeLength="4dp"
+                            android:requiresFadingEdge="horizontal"
+                            android:scrollbarFadeDuration="10"
+                            android:scrollbarStyle="outsideInset"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.51"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/konular_baslik">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:orientation="vertical">
+
+                                <android.support.constraint.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/colorB">
+
+                                    <TextView
+                                        android:id="@+id/hikaye_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="16dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Bellek Kullanımı"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur1_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="4"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/hikaye_txt" />
+
+                                    <TextView
+                                        android:id="@+id/tur2_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Kavram İlişkisi"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur1_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur2_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="5"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur2_txt" />
+
+                                    <TextView
+                                        android:id="@+id/tur3_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Görsel Bağıntılar"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur2_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur3_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="6"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur3_txt" />
+
+
+                                    <TextView
+                                        android:id="@+id/tur4_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Parça Bütün İlişkisi"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur3_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur4_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="4"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur4_txt" />
+
+
+                                    <TextView
+                                        android:id="@+id/tur5_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Şekil Gölge İlişkisi"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur4_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur5_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="4"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur5_txt" />
+
+                                    <TextView
+                                        android:id="@+id/tur6_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Üç Boyutlu Düşünme"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur5_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur6_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="5"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur6_txt" />
+
+                                    <TextView
+                                        android:id="@+id/tur7_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Şifre Çözme"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur6_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur7_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="3"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur7_txt" />
+
+                                    <TextView
+                                        android:id="@+id/tur8_txt"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginTop="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:text="Sözel Dikkat"
+                                        android:textAlignment="textStart"
+                                        android:textColor="@color/cardview_light_background"
+                                        android:textSize="12sp"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur7_bar" />
+
+                                    <ProgressBar
+                                        android:id="@+id/tur8_bar"
+                                        style="?android:attr/progressBarStyleHorizontal"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:max="4"
+                                        android:progress="2"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.0"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toBottomOf="@+id/tur8_txt" />
+
+
+                                </android.support.constraint.ConstraintLayout>
+
+                            </LinearLayout>
+                        </ScrollView>
+
+                        <TextView
+                            android:id="@+id/konular_baslik"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:text="Konulara Göre Dağılım"
+                            android:textColor="@color/colorPrimaryDark"
+                            app:layout_constraintStart_toStartOf="@+id/sira_bar"
+                            app:layout_constraintTop_toBottomOf="@+id/sira_bar" />
+
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/clYayin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility = "invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/ayar_paylas_txt3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="1"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:visibility="invisible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ScrollView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@color/colorB"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ayar_paylas_txt3">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/imgBilsem1"
+                                    android:layout_width="100dp"
+                                    android:layout_height="200dp"
+                                    android:layout_marginStart="30dp"
+                                    app:srcCompat="@drawable/rota" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem1Baslik"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Bilsem Test Kitabı 1. Sınıf"
+                                    android:textColor="@color/colorAccentKitapBaslik"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem1Metin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="İlkokul 1. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
+                                    android:textColor="@color/colorAccentKitapMetin" />
+
+                                <ImageView
+                                    android:id="@+id/imgBilsem2"
+                                    android:layout_width="100dp"
+                                    android:layout_height="200dp"
+                                    android:layout_marginStart="30dp"
+                                    app:srcCompat="@drawable/rota" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem2Baslik"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Bilsem Test Kitabı 2. Sınıf"
+                                    android:textColor="@color/colorAccentKitapBaslik"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem2Metin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="İlkokul 2. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
+                                    android:textColor="@color/colorAccentKitapMetin" />
+
+
+                                <ImageView
+                                    android:id="@+id/imgBilsem3"
+                                    android:layout_width="100dp"
+                                    android:layout_height="200dp"
+                                    android:layout_marginStart="30dp"
+                                    app:srcCompat="@drawable/rota" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem3Baslik"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="Bilsem Test Kitabı 3. Sınıf"
+                                    android:textColor="@color/colorAccentKitapBaslik"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvBilsem3Metin"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:text="İlkokul 3. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
+                                    android:textColor="@color/colorAccentKitapMetin" />
+
+                            </LinearLayout>
+                        </ScrollView>
+
+                    </android.support.constraint.ConstraintLayout>
+
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/yayin_info_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.45">
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sonuc_baslik_txt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="BİLSEM Başarı Tablosu"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sertifica_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_share_kirmizi"
+        tools:ignore="VectorDrawableCompat" />
+
+</android.support.constraint.ConstraintLayout>

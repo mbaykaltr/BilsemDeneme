@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Bilsem Deneme</string>
+    <string name="veli_aciklama">\t\t Sayın Öğretmenler, Veliler;\n\n
+
+            \t\t Bu sınav ilkokul 1, 2 ve 3. sınıf öğrencileri için hazırlanmış online mini bir deneme sınavıdır.\n\n
+
+
+        \t\tSınav, Milli Eğitim Bakanlığının üstün yetenekli çocukları tespit etmek için yapmış olduğu
+        genel tarama testi referans alınarak hazırlanmıştır.\n\n
+
+
+        \t\tSınavın sağlıklı yapılabilmesi için internete bağlı olduğunuzdan emin olmalısınız.\n\n
+        \t\t35 adet soru bulunan bu sınavda her soru bir dakika içerisinde çözülmelidir.
+    Bir dakikalık süre aşıldığında soruya cevap verilememektedir.\n\n
+        \t\tSınavda soru tarzı değiştiğinde ihtiyaç duyulan yönergeler soruların solundaki baloncuklarda verilmektedir.
+        Okumakta güçlük çeken ya da yeterince hızlı okuyamayan öğrencilere soruları anlamaları için yardımcı olabilirsiniz. \n\n
+       \t\tSınavda 8 farklı kategoride soru bulunmaktadır. Bu kategoriler sırasıyla;\n\n
+
+        1- Bellek Kullanımı\n
+        2- Kavram İlişkisi\n
+        3- Görsel Bağıntılar\n
+        4- Parça Bütün İlişkisi\n
+        5- Şekil Gölge İlişkisi\n
+        6- Üç Boyutlu Düşünme\n
+        7- Şifre Çözme\n
+        8- Sözel Dikkat (2. ve 3. sınıflar için)\n\n
+
+
+    \t\tSınav ortalama 20 dakika sürmektedir ve sınav sonunda öğrencinin başarı durumu ile ilgili genel bir rapor sunulmaktadır.
+    İsteğe bağlı olarak bu raporu e-posta veya WhatsApp kanalları ile dilediğiniz kişilerle paylaşabilirsiniz.\n\n
+    \t\tÖğrenci sınava hazır olduğunda sağ traftaki başlat butonuna basarak sınavı başlatabilirsiniz.\n\n
+        \t\tBaşarılar dileriz...\n\n\n\n
+
+  </string>
+</resources>
