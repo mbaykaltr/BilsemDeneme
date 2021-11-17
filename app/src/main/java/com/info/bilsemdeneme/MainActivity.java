@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -27,6 +23,23 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+
+import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,13 +52,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
 
 
-    private ImageView soru_resim, resim_a,resim_b,resim_c,resim_d,sonraki,baloncuk_img;
+    private ImageView soru_resim, resim_a,resim_b,resim_c,resim_d,sonraki,sonraki2,baloncuk_img;
     private ImageView zaman_bar_zemin,zaman_bar_dolan,SoruNo_bar_dolan,SoruNo_Zemin;
     private ImageView baslat_buton;
     private TextView tesekkur,aciklama_txt,soru_no_txt,soru_no_kalan_txt,sinav_aciklama_txt,baslik1_txt,baslik2_txt,hikaye_txt;
@@ -63,8 +78,12 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progress_bekle;
     private CheckBox checkBox_mail;
     private ImageView fon_img;
-    private RadioButton rb1Sinif, rb2Sinif, rb3Sinif;
+    private RadioButton rb1Sinif, rb2Sinif, rb3Sinif, rb1SinifFree, rb2SinifFree, rb3SinifFree;
     private RadioGroup rdySinif;
+    private BillingClient mBillingClient;
+    private List<SkuDetails> skuINAPPDetayListesi = new ArrayList<>();
+    private List<SkuDetails> skuSUBSDetayListesi = new ArrayList<>();
+
 
 
 
@@ -76,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         sp = getSharedPreferences("SinavBilgisi",MODE_PRIVATE);
         editor = sp.edit();
+
 
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -104,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
         card_c = findViewById(R.id.card_c);
         card_d = findViewById(R.id.card_d);
         sonraki=findViewById(R.id.sonraki);
+        sonraki2=findViewById(R.id.sonraki2);
         soru_area=findViewById(R.id.soru_are);
         tesekkur=findViewById(R.id.tesekkür_txt);
         aciklama_txt=findViewById(R.id.aciklama_txt);
@@ -133,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
         rb1Sinif = findViewById(R.id.rb1Sinif);
         rb2Sinif = findViewById(R.id.rb2Sinif);
         rb3Sinif = findViewById(R.id.rb3Sinif);
+        rb1SinifFree = findViewById(R.id.rb1SinifFree);
+        rb2SinifFree = findViewById(R.id.rb2SinifFree);
+        rb3SinifFree = findViewById(R.id.rb3SinifFree);
+
+
 
 
 
@@ -179,26 +205,103 @@ public class MainActivity extends AppCompatActivity {
         tur7=sp.getInt("tur7",0);
         tur8=sp.getInt("tur8",0);
 
+        mBillingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build();
+        mBillingClient.startConnection(new BillingClientStateListener() {
 
 
-        if(soru_no==-1){    //////  eğer soru_no=-1 ise bura  çalışsın
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
 
+
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+
+                    buttonlarinDurumuDegistir(true);
+
+                    List<String> skuListINAPP = new ArrayList<>();
+
+                    Log.e("MainAct. BillingResp","Ödeme sisteminde sorun yok");
+
+                    skuListINAPP.add("sinif1deneme1");
+                    skuListINAPP.add("sinif2deneme1");
+                    skuListINAPP.add("sinif3deneme1a");
+
+
+                    SkuDetailsParams.Builder paramsINAPP = SkuDetailsParams.newBuilder();
+
+                    paramsINAPP.setSkusList(skuListINAPP).setType(BillingClient.SkuType.INAPP);
+
+                    mBillingClient.querySkuDetailsAsync(paramsINAPP.build(), new SkuDetailsResponseListener() {
+                        @Override
+                        public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> list) {
+
+                            skuINAPPDetayListesi = list;
+
+                        }
+                    });
+
+
+                    List<String> skuListSUBS = new ArrayList<>();
+
+                    skuListSUBS.add("sinif3deneme1");
+
+                    SkuDetailsParams.Builder paramsSUBS = SkuDetailsParams.newBuilder();
+
+                    paramsSUBS.setSkusList(skuListSUBS).setType(BillingClient.SkuType.SUBS);
+
+                    mBillingClient.querySkuDetailsAsync(paramsSUBS.build(), new SkuDetailsResponseListener() {
+                        @Override
+                        public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> list) {
+
+                            skuSUBSDetayListesi = list;
+
+                        }
+                    });
+
+
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
+                    Log.e("MainAct. BillingResp","Ödeme sisteminde bir sorun olabilir google play hesabını kontrol ediniz");
+                    sinif=0;
+                    buttonlarinDurumuDegistir(false);
+                }
+
+            }
+
+            @Override
+            public void onBillingServiceDisconnected() {
+
+                Toast.makeText(getApplicationContext(), "Ödeme sistemi şuanda geçerli değil", Toast.LENGTH_SHORT).show();
+                Log.e("MainAct. BillingResp","Ödeme sistemi şuanda geçerli değil");
+                sinif=0;
+                buttonlarinDurumuDegistir(false);
+
+            }
+        });
+
+
+
+        if(soru_no==-1) {    //////  eğer soru_no=-1 ise bura  çalışsın
 
 
             soru_no_kalan_txt.setVisibility(View.INVISIBLE);
             soru_no_txt.setVisibility(View.INVISIBLE);
             soru_area.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorseffaf));
 
-            baslik1_txt.setTextSize(3*punto);
-            baslik2_txt.setTextSize((3*punto)/2);
+            baslik1_txt.setTextSize(3 * punto);
+            baslik2_txt.setTextSize((3 * punto) / 2);
             sinav_aciklama_txt.setTextSize(punto);
-
 
 
             baslik1_txt.setVisibility(View.VISIBLE);
             baslik2_txt.setVisibility(View.VISIBLE);
             sinav_aciklama_txt.setVisibility(View.VISIBLE);
             scrool.setVisibility(View.VISIBLE);
+
+
+
+
+
 
 
             String urlbslt = "https://app.1e1okul.com/bilsemdeneme/resim/baslat_buton_g.png";
@@ -266,8 +369,12 @@ public class MainActivity extends AppCompatActivity {
             if(sinif==1) {sorusayisi=30;
             editor.putInt("sorusayisi",30);
                 soru_id=soru_no+35;}
+           else if(sinif==11) {sorusayisi=30;
+                editor.putInt("sorusayisi",30);
+                soru_id=soru_no+104;}
             else if(sinif==3)soru_id=soru_no+65;
-
+            else if(sinif==21)soru_id=soru_no+134;
+            else if(sinif==31)soru_id=soru_no+169;
 
             editor.putInt("soru_no", soru_no);
             editor.commit();
@@ -302,7 +409,6 @@ public class MainActivity extends AppCompatActivity {
             String url1 = "https://app.1e1okul.com/bilsemdeneme/resim/sinif"+sinif+"/s" + String.valueOf(soru_no) + "_a.PNG";
             Picasso.with(this).load(url1).resize(genislik / 4, yukseklik / 4).centerInside().into(resim_a);
             card_a.setVisibility(View.INVISIBLE);
-
 
             String url2 = "https://app.1e1okul.com/bilsemdeneme/resim/sinif"+sinif+"/s" + String.valueOf(soru_no) + "_b.PNG";
             Picasso.with(this).load(url2).resize(genislik / 4, yukseklik / 4).centerInside().into(resim_b);
@@ -900,12 +1006,13 @@ public class MainActivity extends AppCompatActivity {
 
                     String url4 = "https://app.1e1okul.com/bilsemdeneme/resim/sonraki.png";
                     Picasso.with(getApplication()).load(url4).resize(genislik / 3, yukseklik / 5).centerInside().into(sonraki);
-
-
+                  //  Picasso.with(getApplication()).load(url4).resize(genislik / 3, yukseklik / 5).centerInside().into(sonraki2);
 
                     sonraki.setAnimation(iconacik);
+                    //sonraki2.setAnimation(iconacik);
 
                     sonraki.setVisibility(View.VISIBLE);
+                    //sonraki2.setVisibility(View.VISIBLE);
 
                 }
 
@@ -961,9 +1068,15 @@ public class MainActivity extends AppCompatActivity {
         sonraki.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+                finish();
 
+            }
+        });
 
-
+        sonraki2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,MainActivity.class));
                 finish();
 
@@ -1029,18 +1142,37 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.rb1Sinif:
+                        Log.e("Main Radio Buton","11. sınıf seçildi");
+                        sinif=11;
+                        editor.putInt("sinif", sinif);
+                        editor.commit();
+                        break;
+                    case R.id.rb2Sinif:
+                        Log.e("Main Radio Buton","21. sınıf seçildi");
+                        sinif=21;
+                        editor.putInt("sinif", sinif);
+                        editor.commit();
+                        break;
+                    case R.id.rb3Sinif:
+                        Log.e("Main Radio Buton","31. sınıf seçildi");
+                        sinif=31;
+                        editor.putInt("sinif", sinif);
+                        editor.commit();
+                        break;
+
+                    case R.id.rb1SinifFree:
                         Log.e("Main Radio Buton","1. sınıf seçildi");
                         sinif=1;
                         editor.putInt("sinif", sinif);
                         editor.commit();
                         break;
-                    case R.id.rb2Sinif:
+                    case R.id.rb2SinifFree:
                         Log.e("Main Radio Buton","2. sınıf seçildi");
                         sinif=2;
                         editor.putInt("sinif", sinif);
                         editor.commit();
                         break;
-                    case R.id.rb3Sinif:
+                    case R.id.rb3SinifFree:
                         Log.e("Main Radio Buton","3. sınıf seçildi");
                         sinif=3;
                         editor.putInt("sinif", sinif);
@@ -1052,7 +1184,45 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        rb1Sinif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                        .setSkuDetails(skuINAPPDetayListesi.get(0))
+                        .build();
+
+                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
+
+            }
+        });
+
+        rb2Sinif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                        .setSkuDetails(skuINAPPDetayListesi.get(1))
+                        .build();
+
+                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
+
+            }
+        });
+
+
+        rb3Sinif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                        .setSkuDetails(skuINAPPDetayListesi.get(3))
+                        .build();
+
+                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
+
+            }
+        });
 
     }
 
@@ -1108,12 +1278,65 @@ public class MainActivity extends AppCompatActivity {
 
         // super.onBackPressed();
     }
+    private void buttonlarinDurumuDegistir(boolean durum){
+
+        rb1Sinif.setSelected(durum);
+        rb2Sinif.setSelected(durum);
+        rb3Sinif.setSelected(durum);
+
+
+       // rb1Sinif.setEnabled(durum);
+        //rb2Sinif.setEnabled(durum);
+        //rb3Sinif.setEnabled(durum);
+
+           }
+
+    @Override
+    public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> list) {
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
+
+            for (Purchase purchase : list) {
+
+                if (!purchase.isAcknowledged()) {
+                    AcknowledgePurchaseParams.newBuilder()
+                            .setPurchaseToken(purchase.getPurchaseToken())
+                            .build();
+                }
+
+                if (purchase.getSkus().equals("sinif1deneme1")) {
+                    rb1Sinif.setChecked(true);
+                }
+
+                if (purchase.getSkus().equals("sinif2deneme1")) {
+                    rb2Sinif.setChecked(true);
+                }
+
+                if (purchase.getSkus().equals("sinif3deneme1a")) {
+                    rb3Sinif.setChecked(true);
+                }
+
+                Toast.makeText(getApplicationContext(), purchase.getSkus() + ": Ürün satın alındı.", Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+
+
+        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
+
+            Toast.makeText(getApplicationContext(), "Ödeme iptal edildi", Toast.LENGTH_SHORT).show();
+            sinif = 0;
+            rb1Sinif.setChecked(false);
+            rb2Sinif.setSelected(false);
+            rb3Sinif.setSelected(false);
+
+
+        }
 
 
 
 
-
-
+    }
 }
 
 

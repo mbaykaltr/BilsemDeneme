@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sonuc_ekran"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context=".MainActivity">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sonuc_area"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/paylas_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -121,15 +121,74 @@
                         app:layout_constraintStart_toEndOf="@+id/paylas_kutusu"
                         app:srcCompat="@drawable/ic_share_kirmizi"
                         tools:ignore="VectorDrawableCompat" />
+                    <ImageView
+                        android:id="@+id/basa_don_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/basa_don"
+                        app:layout_constraintStart_toEndOf="@+id/basa_don"
+                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        tools:ignore="VectorDrawableCompat" />
 
-                    <android.support.constraint.ConstraintLayout
+                    <ImageView
+                        android:id="@+id/basa_don_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/basa_don_yes"
+                        app:layout_constraintStart_toEndOf="@+id/basa_don_yes"
+                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        tools:ignore="VectorDrawableCompat" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/basa_don"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@color/colorBasaDonBox"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/paylas_kutusu"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:id="@+id/basa_don_icon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/TvBasadon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/TvBasadon"
+                            app:srcCompat="@drawable/ic_new_red_24dp"
+                            tools:ignore="VectorDrawableCompat" />
+
+                        <TextView
+                            android:id="@+id/TvBasadon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="Yeni Deneme"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/paylas_icon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/paylas_kutusu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="16dp"
                         android:background="@color/colorC"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/basa_don"
                         app:layout_constraintStart_toStartOf="parent">
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
@@ -160,12 +219,13 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clRota"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:visibility="invisible"
                         app:layout_constraintBottom_toTopOf="@+id/paylas_kutusu"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -191,18 +251,18 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:srcCompat="@drawable/rota" />
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/karne_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.28">
 
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clBasari"
                         android:visibility = "visible"
                         android:layout_width="match_parent"
@@ -336,7 +396,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:orientation="vertical">
 
-                                <android.support.constraint.ConstraintLayout
+                                <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:background="@color/colorB">
@@ -583,7 +643,7 @@
                                         app:layout_constraintTop_toBottomOf="@+id/tur8_txt" />
 
 
-                                </android.support.constraint.ConstraintLayout>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
 
                             </LinearLayout>
                         </ScrollView>
@@ -600,9 +660,9 @@
                             app:layout_constraintTop_toBottomOf="@+id/sira_bar" />
 
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <android.support.constraint.ConstraintLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clYayin"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -720,22 +780,22 @@
                             </LinearLayout>
                         </ScrollView>
 
-                    </android.support.constraint.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/yayin_info_area"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.45">
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -768,4 +828,4 @@
         app:srcCompat="@drawable/ic_share_kirmizi"
         tools:ignore="VectorDrawableCompat" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

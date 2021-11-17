@@ -14,11 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -29,6 +24,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.squareup.picasso.Picasso;
 
@@ -46,9 +47,9 @@ public class Sonuc extends AppCompatActivity {
     private TextView ogrenci_ad_txt, sonuc_sira_txt, sonuc_puan_txt, sonuc_baslik_txt, sonuc_ozet_txt, sonuc_net_txt, konular_baslik;
     private TextView ayarpaylas_txt, ayarpaylas_txt2, ayarpaylas_txt3, tvRota;
     private String ad, soyad;
-    private ImageView paylas_mail_img, paylas_whatsapp_img, sertifica_img, paylas_icon, fon_img, imgRota, bilsem_1, bilsem_2, bilsem_3;
+    private ImageView paylas_mail_img, paylas_whatsapp_img, sertifica_img, paylas_icon,basa_don_icon, basa_don_yes, basa_don_no, fon_img, imgRota, bilsem_1, bilsem_2, bilsem_3;
     private Animation paylasgeri, paylasileri, paylasacik, paylaskapali, hopla;
-    private ConstraintLayout paylas_kutusu, sonuc_ekran, clRota, clYayin, clBasari;
+    private ConstraintLayout paylas_kutusu,basa_don, sonuc_ekran, clRota, clYayin, clBasari;
 
 
     @Override
@@ -68,10 +69,10 @@ public class Sonuc extends AppCompatActivity {
         soyad = sp.getString("soyad", "Öğrenci");
         sinif = sp.getInt("sinif",0);
 
-        if(sinif==1){
+        if(sinif==1 || sinif==11){
             soruSayisi =30;
             barajNet=18;
-        }else if(sinif==2)barajNet=22;
+        }else if(sinif==2 || sinif ==21)barajNet=22;
         else barajNet=23;
 
 
@@ -92,6 +93,10 @@ public class Sonuc extends AppCompatActivity {
         sertifica_img = findViewById(R.id.sertifica_img);
         paylas_icon = findViewById(R.id.paylas_icon);
         paylas_kutusu = findViewById(R.id.paylas_kutusu);
+        basa_don=findViewById(R.id.basa_don);
+        basa_don_yes=findViewById(R.id.basa_don_yes);
+        basa_don_no=findViewById(R.id.basa_don_no);
+        basa_don_icon=findViewById(R.id.basa_don_icon);
         sonuc_ekran = findViewById(R.id.sonuc_ekran);
         fon_img = findViewById(R.id.sonuc_fon_img);
         imgRota = findViewById(R.id.imgRota);
@@ -273,7 +278,7 @@ public class Sonuc extends AppCompatActivity {
         tur5_txt.setText("Şekil Gölge İlişkisi %" + tur5 * 25);
 
         tur6_txt.setTextSize((2 * punto) / 3);
-        if(sinif==1){tur6_txt.setText("Üç Boyutlu Düşünme %" + tur6 * 25);}
+        if(sinif==1 || sinif==11){tur6_txt.setText("Üç Boyutlu Düşünme %" + tur6 * 25);}
         else{ tur6_txt.setText("Üç Boyutlu Düşünme %" + tur6 * 20);}
 
 
@@ -284,7 +289,7 @@ public class Sonuc extends AppCompatActivity {
         tur8_txt.setTextSize((2 * punto) / 3);
         tur8_txt.setText("Sözel Dikkat %" + tur8 * 25);
 
-        if(sinif==1){
+        if(sinif==1||sinif==11){
             tur8_txt.setVisibility(View.INVISIBLE);
             tur8_txt.setVisibility(View.INVISIBLE);
 
@@ -356,7 +361,34 @@ public class Sonuc extends AppCompatActivity {
             }
         });
 
+        paylas_kutusu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(basa_don_yes.getVisibility()==View.INVISIBLE){
+
+                    basa_don_icon.startAnimation(paylasileri);
+
+                    basa_don_yes.startAnimation(paylasacik);
+                    basa_don_yes.setVisibility(View.VISIBLE);
+
+                    basa_don_no.startAnimation(paylasacik);
+                    basa_don_no.setVisibility(View.VISIBLE);
+
+
+
+                }else{ basa_don_icon.startAnimation(paylasgeri);
+
+                    basa_don_no.startAnimation(paylaskapali);
+                    basa_don_no.setVisibility(View.INVISIBLE);
+
+                    basa_don_yes.startAnimation(paylaskapali);
+                    basa_don_yes.setVisibility(View.INVISIBLE);}
+
+
+
+            }
+        });
 
         paylas_whatsapp_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -370,7 +402,7 @@ public class Sonuc extends AppCompatActivity {
                 //share it
                 sendwhatsapp();
 
-                clRota.setVisibility(View.VISIBLE);
+               // clRota.setVisibility(View.VISIBLE);
 
 
             }
@@ -436,8 +468,10 @@ public class Sonuc extends AppCompatActivity {
                 if (myFile.exists()) {
                     myFile.delete();
 
-
                 }
+
+
+
                 editor.remove("sinif");
                 editor.remove("dogru_sayisi");
                 editor.remove("soru_no");
@@ -463,6 +497,8 @@ public class Sonuc extends AppCompatActivity {
         gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+
 
             }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,12 +28,26 @@
         android:weightSum="1"
         tools:context=".MainActivity">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/soru_are"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.35"
             android:background="@color/colorB">
+
+            <ImageView
+                android:id="@+id/sonraki2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/siradaki" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -46,7 +60,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/soru_aciklama"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -80,9 +94,9 @@
                         app:layout_constraintStart_toStartOf="@+id/baloncuk_img"
                         app:layout_constraintTop_toTopOf="@+id/baloncuk_img"
                         app:layout_constraintVertical_bias="0.23000002" />
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/soru_main"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -117,7 +131,7 @@
                         </LinearLayout>
                     </ScrollView>
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/card_soru"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -140,10 +154,10 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/siradaki" />
-                    </android.support.v7.widget.CardView>
-                </android.support.constraint.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/soru_info"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -219,7 +233,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/SoruNo_Zemin"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                </android.support.constraint.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -314,9 +328,9 @@
                 app:layout_constraintTop_toBottomOf="@+id/tesekkür_txt"
                 app:layout_constraintVertical_bias="0.898" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cevap_areaa"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -335,7 +349,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cevap_a"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
@@ -345,7 +359,7 @@
                     tools:layout_editor_absoluteX="570dp"
                     tools:layout_editor_absoluteY="0dp">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/card_a"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -363,10 +377,10 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/siradaki" />
-                    </android.support.v7.widget.CardView>
-                </android.support.constraint.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cevap_b"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
@@ -374,7 +388,7 @@
                     tools:layout_editor_absoluteX="288dp"
                     tools:layout_editor_absoluteY="0dp">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/card_b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -392,10 +406,10 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/siradaki" />
-                    </android.support.v7.widget.CardView>
-                </android.support.constraint.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cevap_c"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
@@ -404,7 +418,7 @@
                     tools:layout_editor_absoluteX="119dp"
                     tools:layout_editor_absoluteY="0dp">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/card_c"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -422,10 +436,10 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/siradaki" />
-                    </android.support.v7.widget.CardView>
-                </android.support.constraint.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <android.support.constraint.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cevap_d"
                     android:layout_width="5dp"
                     android:layout_height="match_parent"
@@ -434,7 +448,7 @@
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="0dp">
 
-                    <android.support.v7.widget.CardView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/card_d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -452,8 +466,8 @@
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY"
                             app:srcCompat="@drawable/siradaki" />
-                    </android.support.v7.widget.CardView>
-                </android.support.constraint.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -470,7 +484,7 @@
                 app:layout_constraintTop_toTopOf="@+id/secenek_area"
                 app:srcCompat="@drawable/siradaki" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -482,7 +496,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/rdySinif"
         app:layout_constraintEnd_toStartOf="@id/rdySinif"
-        app:layout_constraintTop_toTopOf="@+id/rdySinif"
+        app:layout_constraintTop_toTopOf="@+id/scrool"
         app:layout_constraintVertical_bias="0.17000002"
         app:srcCompat="@drawable/baslat_buton_img" />
 
@@ -490,37 +504,81 @@
         android:id="@+id/rdySinif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fon_img"
-        app:layout_constraintTop_toTopOf="@+id/scrool"
-        app:layout_constraintVertical_bias="0.25">
+        app:layout_constraintTop_toTopOf="@+id/baslik2_txt">
+
+        <TextView
+            android:id="@+id/tv_rb_sinif1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1. Sınıf"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/rb1SinifFree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Demo"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb1Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1. Sınıf "
+            android:text="Pro"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_rb_sinif2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="2. Sınıf"
             android:textColor="@color/colorAccent"
+            android:textSize="15sp"
             android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/rb2SinifFree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Demo"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb2Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2. Sınıf "
+            android:text="Pro"
+            android:textColor="?android:attr/textColorPrimary" />
+
+        <TextView
+            android:id="@+id/tv_rb_sinif3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="3. Sınıf"
             android:textColor="@color/colorAccent"
             android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/rb3SinifFree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Demo"
+            android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb3Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="3. Sınıf"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            android:text="Pro"
+            android:textColor="?android:attr/textColorPrimary" />
+
     </RadioGroup>
 
     <TextView
@@ -540,7 +598,7 @@
 
     <TextView
         android:id="@+id/baslik2_txt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -586,4 +644,4 @@
         </LinearLayout>
     </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
