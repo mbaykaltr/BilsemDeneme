@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     private SharedPreferences.Editor editor;
     private ConstraintLayout soru_area;
     private ScrollView scrool,hikaye_scrool;
-    private int tur1=0,tur2=0,tur3=0,tur4=0,tur5=0,tur6=0,tur7=0,tur8=0,zorluk=2,sinif;
+    private int tur1=0,tur2=0,tur3=0,tur4=0,tur5=0,tur6=0,tur7=0,tur8=0,zorluk=2,sinif,version;
     private ProgressBar progress_bekle;
     private CheckBox checkBox_mail;
     private ImageView fon_img;
@@ -190,6 +190,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         aciklama=sp.getString("aciklama","Açıklama yok");
         sinif = sp.getInt("sinif",0);
         sorusayisi=sp.getInt("sorusayisi",35);
+        version = sp.getInt("version",0);
+
+        forceUpdate(version);
 
        // if(soru_no==2){
        //   soru_no=soru_no+24;
@@ -263,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
                     Log.e("MainAct. BillingResp","Ödeme sisteminde bir sorun olabilir google play hesabını kontrol ediniz");
                     sinif=0;
+                    editor.putInt("sinif", sinif);
+                    editor.commit();
                     buttonlarinDurumuDegistir(false);
                 }
 
@@ -274,6 +279,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 Toast.makeText(getApplicationContext(), "Ödeme sistemi şuanda geçerli değil", Toast.LENGTH_SHORT).show();
                 Log.e("MainAct. BillingResp","Ödeme sistemi şuanda geçerli değil");
                 sinif=0;
+                editor.putInt("sinif", sinif);
+                editor.commit();
                 buttonlarinDurumuDegistir(false);
 
             }
@@ -1305,14 +1312,23 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                 if (purchase.getSkus().equals("sinif1deneme1")) {
                     rb1Sinif.setChecked(true);
+                    sinif=11;
+                    editor.putInt("sinif", sinif);
+                    editor.commit();
                 }
 
                 if (purchase.getSkus().equals("sinif2deneme1")) {
                     rb2Sinif.setChecked(true);
+                    sinif=21;
+                    editor.putInt("sinif", sinif);
+                    editor.commit();
                 }
 
                 if (purchase.getSkus().equals("sinif3deneme1a")) {
                     rb3Sinif.setChecked(true);
+                    sinif=31;
+                    editor.putInt("sinif", sinif);
+                    editor.commit();
                 }
 
                 Toast.makeText(getApplicationContext(), purchase.getSkus() + ": Ürün satın alındı.", Toast.LENGTH_SHORT).show();
@@ -1326,9 +1342,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
             Toast.makeText(getApplicationContext(), "Ödeme iptal edildi", Toast.LENGTH_SHORT).show();
             sinif = 0;
+            editor.putInt("sinif", sinif);
+            editor.commit();
             rb1Sinif.setChecked(false);
-            rb2Sinif.setSelected(false);
-            rb3Sinif.setSelected(false);
+            rb2Sinif.setChecked(false);
+            rb3Sinif.setChecked(false);
 
 
         }
@@ -1337,6 +1355,60 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
     }
+
+    public void forceUpdate(int version){
+
+        final int prod_version = 13;
+
+        if(prod_version != version){
+
+        String url = "https://app.1e1okul.com/bilsemdeneme/get_version.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONArray kategoriArray = jsonObject.getJSONArray("version");
+                    Log.e("KatDao.GetirWeb","kategoriler alındı mı?");
+
+                    for(int i=0;i<kategoriArray.length();i++){
+                        JSONObject k = kategoriArray.getJSONObject(i);
+
+                        int new_version = k.getInt("version");
+                        if (prod_version < new_version){  startActivity(new Intent(MainActivity.this,Force.class));
+                            finish();
+                        } else {
+                            editor.putInt("version", new_version);
+                            editor.commit();
+                        }
+
+                        Log.e("gelen version"," "+ new_version);
+
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
+        Volley.newRequestQueue(this).add(stringRequest);
+
+    }}
+
+
+
 }
 
 

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Bilsem Deneme</string>
+    <string name="force_update_text">Uygulama güncellenmiştir. \n\n\n Uygulamayı kullanabilmeniz için güncel sürümünü kurmalısınız. </string>
     <string name="veli_aciklama">\t\t Sayın Öğretmenler, Veliler;\n\n
 
             \t\t Bu sınav ilkokul 1, 2 ve 3. sınıf öğrencileri için hazırlanmış online mini bir deneme sınavıdır.\n\n
