@@ -3,19 +3,21 @@
     <string name="force_update_text">Uygulama güncellenmiştir. \n\n\n Uygulamayı kullanabilmeniz için güncel sürümünü kurmalısınız. </string>
     <string name="veli_aciklama">\t\t Sayın Öğretmenler, Veliler;\n\n
 
-            \t\t Bu sınav ilkokul 1, 2 ve 3. sınıf öğrencileri için hazırlanmış online mini bir deneme sınavıdır.\n\n
+            \t\t Bu uygulama ilkokul 1, 2 ve 3. sınıf öğrencileri için hazırlanmış online mini deneme sınavları içemektedir.\n\n
 
 
-        \t\tSınav, Milli Eğitim Bakanlığının üstün yetenekli çocukları tespit etmek için yapmış olduğu
+        \t\tBu sınavlar, Milli Eğitim Bakanlığının üstün yetenekli çocukları tespit etmek için yapmış olduğu
         genel tarama testi referans alınarak hazırlanmıştır.\n\n
 
 
-        \t\tSınavın sağlıklı yapılabilmesi için internete bağlı olduğunuzdan emin olmalısınız.\n\n
-        \t\t35 adet soru bulunan bu sınavda her soru bir dakika içerisinde çözülmelidir.
+        \t\tHer sınıf için birer adet ücretli olmak üzere ikişer deneme sınavı mevcuttur.\n\n
+        \t\tÜcretli sınavlar için ücretlendirme her bir çözüm için yapılmaktadır ancak ödeme yapan kullanıcılarımız sistem izin verdiği sürece deneme sınavlarını farklı öğrenciler için de kullanabileceklerdir. \n\n
+        \t\tSatın aldığınız sınavı kullanmadan lütfen uygulamayı cihazınızdan kaldırmayın. Uygulamayı kaldırdığınızda satın aldığınız sınavlar kullanılmaz olacaktır.\n\n
+        \t\tİlkokul 1. sınıf için 30 diğer sınıflar için 35 adet soru bulunan bu sınavda her soru bir dakika içerisinde çözülmelidir.
     Bir dakikalık süre aşıldığında soruya cevap verilememektedir.\n\n
         \t\tSınavda soru tarzı değiştiğinde ihtiyaç duyulan yönergeler soruların solundaki baloncuklarda verilmektedir.
         Okumakta güçlük çeken ya da yeterince hızlı okuyamayan öğrencilere soruları anlamaları için yardımcı olabilirsiniz. \n\n
-       \t\tSınavda 8 farklı kategoride soru bulunmaktadır. Bu kategoriler sırasıyla;\n\n
+       \t\tSınavda İlkokul 1. sınıflar için 7 kategori, 2 ve 3. sınıflar için 8 kategoride soru bulunmaktadır. Bu kategoriler sırasıyla;\n\n
 
         1- Bellek Kullanımı\n
         2- Kavram İlişkisi\n
@@ -29,7 +31,7 @@
 
     \t\tSınav ortalama 20 dakika sürmektedir ve sınav sonunda öğrencinin başarı durumu ile ilgili genel bir rapor sunulmaktadır.
     İsteğe bağlı olarak bu raporu e-posta veya WhatsApp kanalları ile dilediğiniz kişilerle paylaşabilirsiniz.\n\n
-    \t\tÖğrenci sınava hazır olduğunda sağ traftaki başlat butonuna basarak sınavı başlatabilirsiniz.\n\n
+    \t\tÖğrenci sınava hazır olduğunda sağ traftaki butonlara basarak sınavı başlatabilirsiniz.\n\n
         \t\tBaşarılar dileriz...\n\n\n\n
 
   </string>

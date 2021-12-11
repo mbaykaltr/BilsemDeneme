@@ -12,7 +12,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.Display;
@@ -45,11 +44,12 @@ public class Sonuc extends AppCompatActivity {
     private ProgressBar tur1_bar, tur2_bar, tur3_bar, tur4_bar, tur5_bar, tur6_bar, tur7_bar, tur8_bar, puan_Bar, sira_bar, sonuc_net_bar;
     private TextView tur1_txt, tur2_txt, tur3_txt, tur4_txt, tur5_txt, tur6_txt, tur7_txt, tur8_txt;
     private TextView ogrenci_ad_txt, sonuc_sira_txt, sonuc_puan_txt, sonuc_baslik_txt, sonuc_ozet_txt, sonuc_net_txt, konular_baslik;
-    private TextView ayarpaylas_txt, ayarpaylas_txt2, ayarpaylas_txt3, tvRota;
-    private String ad, soyad;
-    private ImageView paylas_mail_img, paylas_whatsapp_img, sertifica_img, paylas_icon,basa_don_icon, basa_don_yes, basa_don_no, fon_img, imgRota, bilsem_1, bilsem_2, bilsem_3;
+    private TextView ayarpaylas_txt, ayarpaylas_txt2;
+    private String ad, soyad,konum;
+    private ImageView paylas_mail_img, paylas_whatsapp_img, sertifica_img, paylas_icon,basa_don_icon, basa_don_yes, basa_don_no, fon_img;
     private Animation paylasgeri, paylasileri, paylasacik, paylaskapali, hopla;
-    private ConstraintLayout paylas_kutusu,basa_don, sonuc_ekran, clRota, clYayin, clBasari;
+    private ConstraintLayout paylas_kutusu,basa_don, sonuc_ekran;
+
 
 
     @Override
@@ -68,6 +68,10 @@ public class Sonuc extends AppCompatActivity {
         ad = sp.getString("ad", "Misafir");
         soyad = sp.getString("soyad", "Öğrenci");
         sinif = sp.getInt("sinif",0);
+        editor.putString("konum","sonuc");
+        editor.apply();
+
+
 
         if(sinif==1 || sinif==11){
             soruSayisi =30;
@@ -99,10 +103,6 @@ public class Sonuc extends AppCompatActivity {
         basa_don_icon=findViewById(R.id.basa_don_icon);
         sonuc_ekran = findViewById(R.id.sonuc_ekran);
         fon_img = findViewById(R.id.sonuc_fon_img);
-        imgRota = findViewById(R.id.imgRota);
-        bilsem_1 = findViewById(R.id.imgBilsem1);
-        bilsem_2 = findViewById(R.id.imgBilsem2);
-        bilsem_3 = findViewById(R.id.imgBilsem3);
         paylasileri = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.paylasileri);
         paylasgeri = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.paylasgeri);
         paylasacik = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.paylasacik);
@@ -118,9 +118,6 @@ public class Sonuc extends AppCompatActivity {
         String urlokul = "https://app.1e1okul.com/bilsemdeneme/resim/e1okul.png";
         Picasso.with(this).load(urlokul).resize(yukseklik / 4, yukseklik / 4).centerInside().into(sertifica_img);
 
-        String urlrota = "https://app.1e1okul.com/bilsemdeneme/resim/rota.png";
-        Picasso.with(this).load(urlrota).resize(yukseklik / 4, yukseklik / 4).centerInside().into(imgRota);
-        imgRota.startAnimation(hopla);
 
         String urlmail = "https://app.1e1okul.com/bilsemdeneme/resim/sha.png";
         Picasso.with(this).load(urlmail).resize(yukseklik / 8, yukseklik / 8).centerInside().into(paylas_mail_img);
@@ -128,15 +125,6 @@ public class Sonuc extends AppCompatActivity {
         String urlwhatsapp = "https://app.1e1okul.com/bilsemdeneme/resim/whatsapp.png";
         Picasso.with(this).load(urlwhatsapp).resize(yukseklik / 9, yukseklik / 9).centerInside().into(paylas_whatsapp_img);
 
-        String url_bilsem_1 = "https://app.1e1okul.com/bilsemdeneme/resim/bilsem1.png";
-        Picasso.with(this).load(url_bilsem_1).resize(yukseklik / 4, yukseklik / 5).centerInside().into(bilsem_1);
-
-        String url_bilsem_2 = "https://app.1e1okul.com/bilsemdeneme/resim/bilsem2.png";
-        Picasso.with(this).load(url_bilsem_2).resize(yukseklik / 4, yukseklik / 5).centerInside().into(bilsem_2);
-
-
-        String url_bilsem_3 = "https://app.1e1okul.com/bilsemdeneme/resim/bilsem3.png";
-        Picasso.with(this).load(url_bilsem_3).resize(yukseklik / 4, yukseklik / 5).centerInside().into(bilsem_3);
 
 
         tur1_txt = findViewById(R.id.hikaye_txt);
@@ -155,15 +143,8 @@ public class Sonuc extends AppCompatActivity {
         ogrenci_ad_txt = findViewById(R.id.ogrenci_ad_txt);
         ayarpaylas_txt = findViewById(R.id.ayar_paylas_txt);
         ayarpaylas_txt2 = findViewById(R.id.ayar_paylas_txt2);
-        ayarpaylas_txt3 = findViewById(R.id.ayar_paylas_txt3);
 
 
-        clRota = findViewById(R.id.clRota);
-        clYayin = findViewById(R.id.clYayin);
-        clBasari = findViewById(R.id.clBasari);
-        tvRota = findViewById(R.id.tvRota);
-        tvRota.setTextSize((2 * punto) / 3);
-        tvRota.setTextColor(getResources().getColor(R.color.colorseffaf_yesil));
 
 
         tur1_bar = findViewById(R.id.tur1_bar);
@@ -239,7 +220,7 @@ public class Sonuc extends AppCompatActivity {
         sonuc_baslik_txt.setTextSize((3 * punto) / 2);
         ayarpaylas_txt.setTextSize((3 * punto) / 2);
         ayarpaylas_txt2.setTextSize((3 * punto) / 2);
-        ayarpaylas_txt3.setTextSize((3 * punto) / 2);
+
 
         ogrenci_ad_txt.setTextSize(punto);
 
@@ -296,44 +277,22 @@ public class Sonuc extends AppCompatActivity {
         }
 
 
-        sonuc_baslik_txt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    clBasari.setVisibility(View.VISIBLE);
-                    clYayin.setVisibility(View.INVISIBLE);
-                   }
-        });
-
-
-        clRota.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                if (clBasari.getVisibility() == View.INVISIBLE){
-
-                    clBasari.setVisibility(View.VISIBLE);
-                    clYayin.setVisibility(View.INVISIBLE);
-
-                }else {
-
-                    clBasari.setVisibility(View.INVISIBLE);
-                    clYayin.setVisibility(View.VISIBLE);
-                }
-
-
-            }
-        });
-
-
-
         paylas_kutusu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                clBasari.setVisibility(View.VISIBLE);
-                clYayin.setVisibility(View.INVISIBLE);
+
+                if(basa_don_yes.getVisibility()==View.VISIBLE){
+
+                    basa_don_icon.startAnimation(paylasgeri);
+
+                    basa_don_yes.startAnimation(paylaskapali);
+                    basa_don_yes.setVisibility(View.INVISIBLE);
+
+                    basa_don_no.startAnimation(paylaskapali);
+                    basa_don_no.setVisibility(View.INVISIBLE);
+
+                }
 
 
                 if(paylas_mail_img.getVisibility()==View.INVISIBLE){
@@ -347,7 +306,6 @@ public class Sonuc extends AppCompatActivity {
                     paylas_whatsapp_img.setVisibility(View.VISIBLE);
 
 
-
                 }else{ paylas_icon.startAnimation(paylasgeri);
 
                     paylas_mail_img.startAnimation(paylaskapali);
@@ -356,14 +314,25 @@ public class Sonuc extends AppCompatActivity {
                     paylas_whatsapp_img.startAnimation(paylaskapali);
                     paylas_whatsapp_img.setVisibility(View.INVISIBLE);}
 
-
-
             }
         });
 
-        paylas_kutusu.setOnClickListener(new View.OnClickListener() {
+        basa_don.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(paylas_mail_img.getVisibility()==View.VISIBLE){
+
+                    paylas_icon.startAnimation(paylasgeri);
+
+                    paylas_mail_img.startAnimation(paylaskapali);
+                    paylas_mail_img.setVisibility(View.INVISIBLE);
+
+                    paylas_whatsapp_img.startAnimation(paylaskapali);
+                    paylas_whatsapp_img.setVisibility(View.INVISIBLE);
+                }
+
+
 
                 if(basa_don_yes.getVisibility()==View.INVISIBLE){
 
@@ -374,8 +343,6 @@ public class Sonuc extends AppCompatActivity {
 
                     basa_don_no.startAnimation(paylasacik);
                     basa_don_no.setVisibility(View.VISIBLE);
-
-
 
                 }else{ basa_don_icon.startAnimation(paylasgeri);
 
@@ -393,35 +360,105 @@ public class Sonuc extends AppCompatActivity {
         paylas_whatsapp_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clRota.setVisibility(View.INVISIBLE);
 
                //  Bitmap karne_resmi= screenShot(sonuc_ekran);
                Bitmap karne_resmi = getViewBitmap(sonuc_ekran);
                 //save the image now:
                 saveImage(Sonuc.this,karne_resmi);
                 //share it
-                sendwhatsapp();
-
-               // clRota.setVisibility(View.VISIBLE);
+                sendwhatsapp(Sonuc.this);
 
 
             }
         });
 
-
         paylas_mail_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clRota.setVisibility(View.INVISIBLE);
 
                 // Bitmap karne_resmi= screenShot(sonuc_ekran);
                 Bitmap karne_resmi = getViewBitmap(sonuc_ekran);
                 //save the image now:
                 saveImage(Sonuc.this,karne_resmi);
                 //share it
-                send();
+                send(Sonuc.this);
 
-                clRota.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        basa_don_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                AlertDialog.Builder gu = new AlertDialog.Builder(Sonuc.this);
+                gu.setIcon(R.drawable.ic_warning_black_24dp);
+                gu.setTitle("Başa Dön!!");
+                gu.setMessage("Yeni bir sınav için başa dönmek üzeresiniz. Yapmış olduğunuz sınavla ilgili tüm veriler silinecek. ");
+
+                gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+
+
+                        String root = Sonuc.this.getExternalFilesDir(null).getAbsolutePath();
+                        File myFile = new File(root+"/BilsemDeneme/BilsemKarne.png");
+
+                if (myFile.exists()) {
+                    myFile.delete();
+
+                }
+
+                editor.remove("sinif");
+                editor.remove("dogru_sayisi");
+                editor.remove("soru_no");
+                editor.remove("tur");
+                editor.remove("tur1");
+                editor.remove("tur2");
+                editor.remove("tur3");
+                editor.remove("tur4");
+                editor.remove("tur5");
+                editor.remove("tur6");
+                editor.remove("tur7");
+                editor.remove("tur8");
+                editor.remove("aciklama");
+                editor.remove("konum");
+                editor.apply();
+
+                startActivity(new Intent(Sonuc.this,MainActivity.class));
+                finish();
+
+
+                    }
+                });
+
+                gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+
+                    }
+
+                });
+
+                gu.create().show();
+
+            }
+        });
+
+        basa_don_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                basa_don_icon.startAnimation(paylasgeri);
+                basa_don_yes.startAnimation(paylaskapali);
+                basa_don_yes.setVisibility(View.INVISIBLE);
+                basa_don_no.startAnimation(paylaskapali);
+                basa_don_no.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -464,12 +501,14 @@ public class Sonuc extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+                String root = Sonuc.this.getExternalFilesDir(null).getAbsolutePath();
+
+                //File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+                File myFile = new File(root+"/BilsemDeneme/BilsemKarne.png");
                 if (myFile.exists()) {
                     myFile.delete();
 
                 }
-
 
 
                 editor.remove("sinif");
@@ -484,6 +523,7 @@ public class Sonuc extends AppCompatActivity {
                 editor.remove("tur6");
                 editor.remove("tur7");
                 editor.remove("tur8");
+                editor.remove("konum");
 
                 editor.remove("aciklama");
                 editor.commit();
@@ -513,19 +553,19 @@ public class Sonuc extends AppCompatActivity {
     private static void saveImage(Context context, Bitmap finalBitmap) {
 
 
+       String root = context.getExternalFilesDir(null).getAbsolutePath();
+       File myDir = new File(root + "/BilsemDeneme");
 
-        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File myDir = new File(root + "/BilsemDeneme");
-        Log.i("Directory", "==" + myDir);
+        Log.e("Directory Klasör", "===" + myDir);
         myDir.mkdirs();
 
         String fname = "BilsemKarne" + ".png";
 
-
-        File file = new File(myDir, fname);
+      File file = new File(myDir, fname);
 
         if (file.exists()) file.delete();
         try {
+
             FileOutputStream out = new FileOutputStream(file);
             finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
@@ -534,16 +574,20 @@ public class Sonuc extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("Save image","hata"+e.toString());
         }
     }
 
 
-    public void sendwhatsapp() {
+    public void sendwhatsapp(Context context) {
 
         try {
 
-
-            File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+            String root = context.getExternalFilesDir(null).getAbsolutePath();
+            //String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+            //File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+            //File myFile = new File(root+"/storage/emulated/0/Android/data/com.info.bilsemdeneme/files/BilsemDeneme/BilsemKarne.png");
+            File myFile = new File(root+"/BilsemDeneme/BilsemKarne.png");
             MimeTypeMap mime = MimeTypeMap.getSingleton();
             String ext = myFile.getName().substring(myFile.getName().lastIndexOf(".") + 1);
             String type = mime.getMimeTypeFromExtension(ext);
@@ -558,28 +602,33 @@ public class Sonuc extends AppCompatActivity {
             sendIntent.setType(type);
             sendIntent.putExtra(Intent.EXTRA_TEXT, "Merhaba, bu benim BİLSEM Deneme Sınavındaki başarı tablom. Aynı sınava siz de buradan katılabilirsiniz : " + "https://play.google.com/store/apps/details?id=com.info.bilsemdeneme");
             sendIntent.setType("text/plain");
+
             sendIntent.setPackage("com.whatsapp");
             //startActivity(Intent.createChooser(sendIntent, "BİLSEM Sonucu Paylaş"));
             startActivity(sendIntent);
 
 
+
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("resim paylaşmak için", e.getMessage());
+            Log.e("resim paylaşmak için", "whatsapp: " +e.getMessage());
 
         }
     }
 
-    public void send() {
+    public void send(Context context) {
 
         try {
 
+            String root = context.getExternalFilesDir(null).getAbsolutePath();
 
-            File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+            //String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+            //File myFile = new File("/storage/emulated/0/BilsemDeneme/BilsemKarne.png");
+            File myFile = new File(root+"/BilsemDeneme/BilsemKarne.png");
             MimeTypeMap mime = MimeTypeMap.getSingleton();
             String ext = myFile.getName().substring(myFile.getName().lastIndexOf(".") + 1);
             String type = mime.getMimeTypeFromExtension(ext);
-             Intent sharingIntent = new Intent("android.intent.action.SEND");
+            Intent sharingIntent = new Intent("android.intent.action.SEND");
             sharingIntent.setType(type);
             sharingIntent.putExtra(Intent.EXTRA_TEXT, "Merhaba, bu benim BİLSEM Deneme Sınavındaki başarı tablom. Aynı sınava siz de buradan katılabilirsiniz : " + "https://play.google.com/store/apps/details?id=com.info.bilsemdeneme");
             sharingIntent.setType("text/plain");
@@ -591,10 +640,11 @@ public class Sonuc extends AppCompatActivity {
 
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.e("resim paylaşmak için", e.getMessage());
+            Log.e("resim göndermek için", e.getMessage());
 
         }
     }
+
 
     public Bitmap screenShot(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),

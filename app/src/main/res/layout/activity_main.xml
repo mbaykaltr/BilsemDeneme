@@ -22,10 +22,10 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/bilsem_fon_1"
         android:background="@drawable/bilsem_fon_1"
         android:orientation="vertical"
         android:weightSum="1"
+        app:srcCompat="@drawable/bilsem_fon_1"
         tools:context=".MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -233,6 +233,7 @@
                         app:layout_constraintEnd_toStartOf="@+id/SoruNo_Zemin"
                         app:layout_constraintTop_toTopOf="parent" />
 
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
@@ -261,7 +262,7 @@
                 android:layout_marginStart="16dp"
                 android:ems="10"
                 android:hint="İsim"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapSentences"
                 android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="@+id/tesekkür_txt"
                 app:layout_constraintTop_toBottomOf="@+id/tesekkür_txt" />
@@ -273,7 +274,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="10"
                 android:hint="Soyad"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapSentences"
                 android:visibility="invisible"
                 app:layout_constraintStart_toEndOf="@+id/ad_txt"
                 app:layout_constraintTop_toTopOf="@+id/ad_txt" />
@@ -500,6 +501,89 @@
         app:layout_constraintVertical_bias="0.17000002"
         app:srcCompat="@drawable/baslat_buton_img" />
 
+    <ImageView
+        android:id="@+id/bt_1sinif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorseffaf"
+        android:contextClickable="true"
+        android:text="1. Sınıf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bt_1sinifFree"
+        app:layout_constraintTop_toTopOf="@id/bt_1sinifFree"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <ImageView
+        android:id="@+id/bt_2sinif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorseffaf"
+        android:text="2. Sınıf"
+        app:layout_constraintEnd_toEndOf="@+id/bt_1sinif"
+        app:layout_constraintStart_toStartOf="@+id/bt_1sinif"
+        app:layout_constraintTop_toBottomOf="@+id/bt_1sinif"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <ImageView
+        android:id="@+id/bt_3sinif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorseffaf"
+        android:text="3. Sınıf"
+        app:layout_constraintEnd_toEndOf="@+id/bt_2sinif"
+        app:layout_constraintStart_toStartOf="@+id/bt_2sinif"
+        app:layout_constraintTop_toBottomOf="@+id/bt_2sinif"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <ImageView
+        android:id="@+id/bt_1sinifFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorseffaf"
+        android:text="1. Sınıf"
+        app:layout_constraintEnd_toStartOf="@id/rdySinif"
+        app:layout_constraintStart_toEndOf="@+id/scrool"
+        app:layout_constraintTop_toBottomOf="@+id/baslik1_txt"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <ImageView
+        android:id="@+id/bt_2sinifFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorseffaf"
+        android:text="2. Sınıf"
+        app:layout_constraintEnd_toEndOf="@+id/bt_1sinifFree"
+        app:layout_constraintStart_toStartOf="@+id/bt_1sinifFree"
+        app:layout_constraintTop_toBottomOf="@+id/bt_1sinifFree"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <ImageView
+        android:id="@+id/bt_3sinifFree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorseffaf"
+        android:text="3. Sınıf"
+        app:layout_constraintEnd_toEndOf="@+id/bt_2sinifFree"
+        app:layout_constraintStart_toStartOf="@+id/bt_2sinifFree"
+        app:layout_constraintTop_toBottomOf="@+id/bt_2sinifFree"
+        app:srcCompat="@drawable/ic_money_red_24dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grp_sinif_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="411dp"
+        app:constraint_referenced_ids="bt_1sinif,bt_2sinif,bt_2sinifFree,bt_1sinifFree,bt_3sinifFree,bt_3sinif"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RadioGroup
         android:id="@+id/rdySinif"
         android:layout_width="wrap_content"
@@ -522,14 +606,13 @@
             android:id="@+id/rb1SinifFree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demo"
             android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb1Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pro"
+            android:text="Ücretli"
             android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
@@ -546,14 +629,13 @@
             android:id="@+id/rb2SinifFree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demo"
             android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb2Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pro"
+            android:text="Ücretli"
             android:textColor="?android:attr/textColorPrimary" />
 
         <TextView
@@ -569,21 +651,20 @@
             android:id="@+id/rb3SinifFree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Demo"
             android:textColor="?android:attr/textColorPrimary" />
 
         <RadioButton
             android:id="@+id/rb3Sinif"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pro"
+            android:text="Ücretli"
             android:textColor="?android:attr/textColorPrimary" />
 
     </RadioGroup>
 
     <TextView
         android:id="@+id/baslik1_txt"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
@@ -593,6 +674,7 @@
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
@@ -605,7 +687,7 @@
         android:layout_marginEnd="50dp"
         android:text="( BİLİM VE SANAT MERKEZLERİNE HAZIRLIK )\nDENEME SINAVI"
         android:textAlignment="center"
-        android:textColor="#8FA37B"
+        android:textColor="#829370"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"

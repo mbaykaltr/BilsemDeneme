@@ -121,6 +121,7 @@
                         app:layout_constraintStart_toEndOf="@+id/paylas_kutusu"
                         app:srcCompat="@drawable/ic_share_kirmizi"
                         tools:ignore="VectorDrawableCompat" />
+
                     <ImageView
                         android:id="@+id/basa_don_yes"
                         android:layout_width="wrap_content"
@@ -129,7 +130,7 @@
                         android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="@+id/basa_don"
                         app:layout_constraintStart_toEndOf="@+id/basa_don"
-                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        app:srcCompat="@drawable/ic_yes_icon"
                         tools:ignore="VectorDrawableCompat" />
 
                     <ImageView
@@ -140,7 +141,7 @@
                         android:visibility="invisible"
                         app:layout_constraintBottom_toBottomOf="@+id/basa_don_yes"
                         app:layout_constraintStart_toEndOf="@+id/basa_don_yes"
-                        app:srcCompat="@drawable/ic_share_kirmizi"
+                        app:srcCompat="@drawable/ic_no_icon"
                         tools:ignore="VectorDrawableCompat" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -158,6 +159,7 @@
                             android:id="@+id/basa_don_icon"
                             android:layout_width="35dp"
                             android:layout_height="35dp"
+                            android:layout_marginEnd="2dp"
                             app:layout_constraintBottom_toBottomOf="@+id/TvBasadon"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/TvBasadon"
@@ -169,13 +171,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:layout_marginEnd="4dp"
                             android:text="Yeni Deneme"
                             android:textColor="@color/colorAccent"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/paylas_icon"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -198,7 +198,9 @@
                             android:layout_width="35dp"
                             android:layout_height="35dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginEnd="2dp"
                             app:layout_constraintBottom_toBottomOf="@+id/textView"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/textView"
                             app:layout_constraintTop_toTopOf="@+id/textView"
                             app:srcCompat="@drawable/ic_share_kirmizi"
@@ -209,48 +211,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:layout_marginEnd="4dp"
                             android:text="Sonucu Paylaş"
                             android:textColor="@color/colorAccentAcikYesil"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toStartOf="@+id/paylas_icon"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clRota"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:visibility="invisible"
-                        app:layout_constraintBottom_toTopOf="@+id/paylas_kutusu"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/sonuc_ozet_txt">
-
-                        <TextView
-                            android:id="@+id/tvRota"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:text="Eser içeriklerini paylaştığı için\nRTY Rota Yayınlarına teşekkür ederiz."
-                            app:layout_constraintBottom_toBottomOf="@+id/imgRota"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/imgRota"
-                            app:layout_constraintTop_toTopOf="@+id/imgRota" />
-
-                        <ImageView
-                            android:id="@+id/imgRota"
-                            android:layout_width="60dp"
-                            android:layout_height="51dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginBottom="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:srcCompat="@drawable/rota" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -659,126 +627,6 @@
                             app:layout_constraintStart_toStartOf="@+id/sira_bar"
                             app:layout_constraintTop_toBottomOf="@+id/sira_bar" />
 
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/clYayin"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:visibility = "invisible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <TextView
-                            android:id="@+id/ayar_paylas_txt3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="1"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="30sp"
-                            android:textStyle="bold"
-                            android:visibility="invisible"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ScrollView
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="10dp"
-                            android:background="@color/colorB"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ayar_paylas_txt3">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/imgBilsem1"
-                                    android:layout_width="100dp"
-                                    android:layout_height="200dp"
-                                    android:layout_marginStart="30dp"
-                                    app:srcCompat="@drawable/rota" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem1Baslik"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="Bilsem Test Kitabı 1. Sınıf"
-                                    android:textColor="@color/colorAccentKitapBaslik"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem1Metin"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="İlkokul 1. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
-                                    android:textColor="@color/colorAccentKitapMetin" />
-
-                                <ImageView
-                                    android:id="@+id/imgBilsem2"
-                                    android:layout_width="100dp"
-                                    android:layout_height="200dp"
-                                    android:layout_marginStart="30dp"
-                                    app:srcCompat="@drawable/rota" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem2Baslik"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="Bilsem Test Kitabı 2. Sınıf"
-                                    android:textColor="@color/colorAccentKitapBaslik"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem2Metin"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="İlkokul 2. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
-                                    android:textColor="@color/colorAccentKitapMetin" />
-
-
-                                <ImageView
-                                    android:id="@+id/imgBilsem3"
-                                    android:layout_width="100dp"
-                                    android:layout_height="200dp"
-                                    android:layout_marginStart="30dp"
-                                    app:srcCompat="@drawable/rota" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem3Baslik"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="Bilsem Test Kitabı 3. Sınıf"
-                                    android:textColor="@color/colorAccentKitapBaslik"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/tvBilsem3Metin"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:text="İlkokul 3. sınıflar için BİLSEM sınavlarına hazırlık test kitabı "
-                                    android:textColor="@color/colorAccentKitapMetin" />
-
-                            </LinearLayout>
-                        </ScrollView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,16 +1,22 @@
 package com.info.bilsemdeneme;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -28,6 +34,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Group;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.billingclient.api.AcknowledgePurchaseParams;
@@ -36,6 +44,8 @@ import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchaseHistoryRecord;
+import com.android.billingclient.api.PurchaseHistoryResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
@@ -57,16 +67,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.os.Build.VERSION.SDK_INT;
+
+public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener{
 
 
+    private static final int PERMISSION_REQUEST_CODE = 2296;
     private ImageView soru_resim, resim_a,resim_b,resim_c,resim_d,sonraki,sonraki2,baloncuk_img;
     private ImageView zaman_bar_zemin,zaman_bar_dolan,SoruNo_bar_dolan,SoruNo_Zemin;
     private ImageView baslat_buton;
     private TextView tesekkur,aciklama_txt,soru_no_txt,soru_no_kalan_txt,sinav_aciklama_txt,baslik1_txt,baslik2_txt,hikaye_txt;
     private EditText ad_txt,soyad_txt,email_txt;
     private Button karne_buton;
-    private String soru_resmi,verilen_cevap="E",dogru_cevap="E",aciklama,ek_aciklama;
+    private String soru_resmi,verilen_cevap="E",dogru_cevap="E",aciklama,ek_aciklama,konum;
     private int genislik,yukseklik,soru_no=0,tur=0,dogru_sayisi=0,sorusayisi, soru_id;
     private CardView card_soru,card_a,card_b,card_c, card_d;
     private Animation geridon,ileridon,iconacik,iconkapali,zaman,zaman30,zaman60,iconacikgecikmeli,paylasacik,paylaskapali;
@@ -75,16 +90,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     private ConstraintLayout soru_area;
     private ScrollView scrool,hikaye_scrool;
     private int tur1=0,tur2=0,tur3=0,tur4=0,tur5=0,tur6=0,tur7=0,tur8=0,zorluk=2,sinif,version;
+    private int odeme1=0, odeme2=0, odeme3=0;
     private ProgressBar progress_bekle;
     private CheckBox checkBox_mail;
-    private ImageView fon_img;
+    private ImageView fon_img,bt_1sinif, bt_2sinif, bt_3sinif, bt_1sinifFree, bt_2sinifFree, bt_3sinifFree;
     private RadioButton rb1Sinif, rb2Sinif, rb3Sinif, rb1SinifFree, rb2SinifFree, rb3SinifFree;
+    private Group grp_sinif_select;
     private RadioGroup rdySinif;
     private BillingClient mBillingClient;
     private List<SkuDetails> skuINAPPDetayListesi = new ArrayList<>();
     private List<SkuDetails> skuSUBSDetayListesi = new ArrayList<>();
-
-
 
 
 
@@ -97,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         editor = sp.edit();
 
 
-
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -107,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         double density = getResources().getDisplayMetrics().density;
         final int punto = (int)((genislik+1200)/(density*70));
         final int bosluk = ((genislik-200)/40);
-
 
 
         Log.e("ekran ölçüleri","Genişlik : "+String.valueOf(genislik)+" , Yükseklik : "+ String.valueOf(yukseklik));
@@ -149,15 +162,21 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         progress_bekle = findViewById(R.id.progress_bekle);
         checkBox_mail = findViewById(R.id.checkBox_mail);
         fon_img = findViewById(R.id.fon_img);
-
+        grp_sinif_select = findViewById(R.id.grp_sinif_select);
         rdySinif = findViewById(R.id.rdySinif);
         rb1Sinif = findViewById(R.id.rb1Sinif);
         rb2Sinif = findViewById(R.id.rb2Sinif);
         rb3Sinif = findViewById(R.id.rb3Sinif);
+        bt_1sinif=findViewById(R.id.bt_1sinif);
+        bt_2sinif=findViewById(R.id.bt_2sinif);
+        bt_3sinif=findViewById(R.id.bt_3sinif);
+        bt_1sinifFree=findViewById(R.id.bt_1sinifFree);
+        bt_2sinifFree=findViewById(R.id.bt_2sinifFree);
+        bt_3sinifFree=findViewById(R.id.bt_3sinifFree);
+
         rb1SinifFree = findViewById(R.id.rb1SinifFree);
         rb2SinifFree = findViewById(R.id.rb2SinifFree);
         rb3SinifFree = findViewById(R.id.rb3SinifFree);
-
 
 
 
@@ -190,9 +209,19 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         aciklama=sp.getString("aciklama","Açıklama yok");
         sinif = sp.getInt("sinif",0);
         sorusayisi=sp.getInt("sorusayisi",35);
-        version = sp.getInt("version",0);
+        odeme1 = sp.getInt("odeme1",0);
+        odeme2 = sp.getInt("odeme2",0);
+        odeme3 = sp.getInt("odeme3",0);
+        konum = sp.getString("konum","giris");
+
 
         forceUpdate(version);
+
+        if(konum.equals("sonuc")){  startActivity(new Intent(MainActivity.this,Sonuc.class));
+            finish();}
+
+        if (soru_no>=sorusayisi) karneBilgleriGir();
+
 
        // if(soru_no==2){
        //   soru_no=soru_no+24;
@@ -207,6 +236,29 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         tur6=sp.getInt("tur6",0);
         tur7=sp.getInt("tur7",0);
         tur8=sp.getInt("tur8",0);
+
+
+
+        if(!isNetworkConnected()){
+            AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
+            gu.setIcon(R.drawable.ic_wifi_off_red_24dp);
+
+            gu.setTitle("Bağlantı Hatası!");
+            gu.setMessage("Uygulamayı kullanabilmeniz için internete bağlı olmanız gerekir. \n\nLütfen bağlantınızı kontrol ediniz!!");
+
+            gu.setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    finish();
+
+                }
+            });
+
+            gu.create().show();
+
+
+        }
 
         mBillingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build();
         mBillingClient.startConnection(new BillingClientStateListener() {
@@ -260,14 +312,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                         }
                     });
 
+                   // odemeControl();
 
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
                     Log.e("MainAct. BillingResp","Ödeme sisteminde bir sorun olabilir google play hesabını kontrol ediniz");
-                    sinif=0;
-                    editor.putInt("sinif", sinif);
-                    editor.commit();
+                  // nopay();
                     buttonlarinDurumuDegistir(false);
                 }
 
@@ -277,14 +328,19 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             public void onBillingServiceDisconnected() {
 
                 Toast.makeText(getApplicationContext(), "Ödeme sistemi şuanda geçerli değil", Toast.LENGTH_SHORT).show();
-                Log.e("MainAct. BillingResp","Ödeme sistemi şuanda geçerli değil");
-                sinif=0;
-                editor.putInt("sinif", sinif);
-                editor.commit();
+               Log.e("MainAct. BillingResp","Ödeme sistemi şuanda geçerli değil");
+              //nopay();
                 buttonlarinDurumuDegistir(false);
 
-            }
+                 }
+
+
+
         });
+
+       // *** if(odeme1==0 || odeme2 == 0 || odeme3 ==0 ) odemeControl();
+
+
 
 
 
@@ -295,8 +351,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             soru_no_txt.setVisibility(View.INVISIBLE);
             soru_area.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorseffaf));
 
+
+
             baslik1_txt.setTextSize(3 * punto);
-            baslik2_txt.setTextSize((3 * punto) / 2);
+            baslik2_txt.setTextSize((5 * punto) / 4);
             sinav_aciklama_txt.setTextSize(punto);
 
 
@@ -306,71 +364,298 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             scrool.setVisibility(View.VISIBLE);
 
 
-
-
-
-
-
             String urlbslt = "https://app.1e1okul.com/bilsemdeneme/resim/baslat_buton_g.png";
-            Picasso.with(this).load(urlbslt).resize(genislik / 5, genislik / 5).centerInside().into(baslat_buton);
+            String url1sinifred = "https://app.1e1okul.com/bilsemdeneme/resim/1sinifred.png";
+            String url1sinifgreen = "https://app.1e1okul.com/bilsemdeneme/resim/1sinifgreen.png";
+            String url2sinifred = "https://app.1e1okul.com/bilsemdeneme/resim/2sinifred.png";
+            String url2sinifgreen = "https://app.1e1okul.com/bilsemdeneme/resim/2sinifgreen.png";
+            String url3sinifred = "https://app.1e1okul.com/bilsemdeneme/resim/3sinifred.png";
+            String url3sinifgreen = "https://app.1e1okul.com/bilsemdeneme/resim/3sinifgreen.png";
+            String url1sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/1sinifopen.png";
+            String url2sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/2sinifopen.png";
+            String url3sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/3sinifopen.png";
+
+
+            //Picasso.with(this).load(urlbslt).resize(genislik / , genislik / 5).centerInside().into(baslat_buton);
+
+
+            Picasso.with(this).load(url1sinifgreen).resize(genislik / 8, genislik / 8).centerInside().into(bt_1sinifFree);
+            Picasso.with(this).load(url2sinifgreen).resize(genislik / 8, genislik / 8).centerInside().into(bt_2sinifFree);
+            Picasso.with(this).load(url3sinifgreen).resize(genislik / 8, genislik / 8).centerInside().into(bt_3sinifFree);
+
+
+            if(odeme1==0) Picasso.with(this).load(url1sinifred).resize(genislik / 8, genislik / 8).centerInside().into(bt_1sinif);
+                else Picasso.with(this).load(url1sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_1sinif);
+            if(odeme2==0) Picasso.with(this).load(url2sinifred).resize(genislik / 8, genislik / 8).centerInside().into(bt_2sinif);
+                else Picasso.with(this).load(url2sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_2sinif);
+            if(odeme3==0) Picasso.with(this).load(url3sinifred).resize(genislik / 8, genislik / 8).centerInside().into(bt_3sinif);
+                else Picasso.with(this).load(url3sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_3sinif);
 
 
 
-            baslat_buton.setVisibility(View.VISIBLE);
-            rdySinif.setVisibility(View.VISIBLE);
+            //bt_1sinif.setOnClickListener(this);
+            //bt_2sinif.setOnClickListener(this);
+            //bt_3sinif.setOnClickListener(this);
 
 
-            baslat_buton.setOnClickListener(new View.OnClickListener() {
+
+            baslat_buton.setVisibility(View.INVISIBLE);
+            rdySinif.setVisibility(View.INVISIBLE);
+            grp_sinif_select.setVisibility(View.VISIBLE);
+
+            bt_1sinifFree.setOnClickListener(new OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
 
+                        sinif=1;
+                        editor.putInt("sinif", sinif);
+                        soru_no = soru_no + 1;
+                        editor.putInt("soru_no", soru_no);
+                        editor.commit();
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        finish();
 
-                    if(sinif==0){
+                }
+            });
 
-                                AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
-                                gu.setIcon(R.drawable.ic_warning_black_24dp);
-                                gu.setTitle("Sınıf Seçilmedi.");
-                                gu.setMessage("Sınavı başlatmak için lütfen sınıf seçiniz.");
+            bt_2sinifFree.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-
-                                gu.setPositiveButton("Tamam", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                    }
-                                });
-
-                               gu.create().show();
-
-                    }else{
-
+                    sinif=2;
+                    editor.putInt("sinif", sinif);
                     soru_no = soru_no + 1;
                     editor.putInt("soru_no", soru_no);
-
                     editor.commit();
-
-                    rdySinif.setVisibility(View.INVISIBLE);
-
                     startActivity(new Intent(MainActivity.this,MainActivity.class));
                     finish();
 
-
-                }}
+                }
             });
+
+            bt_3sinifFree.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // test için ödeme durumları sıfırlanır
+
+/*
+                   odeme3=1;
+
+                    if(odeme3==1){
+
+                        odeme1=0;
+                        odeme2=0;
+                        odeme3=0;
+
+                        editor.putInt("odeme1",0);
+                        editor.putInt("odeme2",0);
+                        editor.putInt("odeme3",0);
+                        editor.commit();
+                         }  */
+
+                    // test için ödeme durumları sıfırlanır//  else{
+
+                    sinif=3;
+                    editor.putInt("sinif", sinif);
+                    soru_no = soru_no + 1;
+                    editor.putInt("soru_no", soru_no);
+                    editor.commit();
+
+                        // test için ödeme durumları sıfırlanır// }
+
+                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    finish();
+                }
+            });
+
+
+
+            bt_1sinif.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if(odeme1==0){
+
+                        AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
+                        gu.setIcon(R.drawable.ic_tr_icon);
+                        gu.setTitle("Ücretli Sınav!");
+                        gu.setMessage("1. Sınıf Bilsem Deneme Sınavı için ödeme yapmak üzeresiniz.\nÜcretli deneme sınavlarımız her çözüm için ücretlendirilmektedir. Ancak sistem izin verdiği durumlarda yeni bir ödeme yapmadan defalarca da kullanabilirsiniz. \n\nOnaylıyor musunuz?");
+
+
+                        gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                                        .setSkuDetails(skuINAPPDetayListesi.get(0))
+                                        .build();
+
+                                mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
+
+                            }
+                        });
+
+
+                        gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                            }
+
+                        });
+
+                        gu.create().show();
+
+
+                       }
+
+                        else{
+                            sinif = 11;
+                            editor.putInt("sinif", sinif);
+                            soru_no = soru_no + 1;
+                            editor.putInt("soru_no", soru_no);
+                            editor.commit();
+                            startActivity(new Intent(MainActivity.this, MainActivity.class));
+                            finish();
+
+                        }
+
+                }
+            });
+
+            bt_2sinif.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (odeme2==0) {
+
+
+                        AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
+                        gu.setIcon(R.drawable.ic_tr_icon);
+                        gu.setTitle("Ücretli Sınav!");
+                        gu.setMessage("2. Sınıf Bilsem Deneme Sınavı için ödeme yapmak üzeresiniz.\nÜcretli deneme sınavlarımız her çözüm için ücretlendirilmektedir. Ancak sistem izin verdiği durumlarda yeni bir ödeme yapmadan defalarca da kullanabilirsiniz. \n\nOnaylıyor musunuz?");
+
+
+                        gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                                        .setSkuDetails(skuINAPPDetayListesi.get(1))
+                                        .build();
+
+                                mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
+
+                            }
+                        });
+
+
+                        gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                            }
+
+                        });
+
+                        gu.create().show();
+
+                    }
+                    else{
+
+
+                        sinif=21;
+                        editor.putInt("sinif", sinif);
+                        soru_no = soru_no + 1;
+                        editor.putInt("soru_no", soru_no);
+                        editor.commit();
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        finish();
+
+                    }
+
+                }
+            });
+
+
+            bt_3sinif.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (odeme3==0) {
+
+                        AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
+                        gu.setIcon(R.drawable.ic_tr_icon);
+                        gu.setTitle("Ücretli Sınav!");
+                        gu.setMessage("3. Sınıf Bilsem Deneme Sınavı için ödeme yapmak üzeresiniz.\nÜcretli deneme sınavlarımız her çözüm için ücretlendirilmektedir. Ancak sistem izin verdiği durumlarda yeni bir ödeme yapmadan defalarca da kullanabilirsiniz. \n\nOnaylıyor musunuz?");
+
+
+                        gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
+                                        .setSkuDetails(skuINAPPDetayListesi.get(2))
+                                        .build();
+
+                                mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
+
+                            }
+                        });
+
+
+                        gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                            }
+
+                        });
+
+                        gu.create().show();
+
+                    }
+                    else{
+
+                        sinif=31;
+                        editor.putInt("sinif", sinif);
+                        soru_no = soru_no + 1;
+                        editor.putInt("soru_no", soru_no);
+
+                        editor.commit();
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        finish();
+
+                    }
+
+                }
+            });
+
+
 
 
             //////  eğer soru_no=-1 ise buraya kadar çalışsın
 
 
-        }else {
+                /// test için  soru_no>=sorusayisi   --->   soru_no>=4
+        }else if(soru_no>=sorusayisi){
 
+            grp_sinif_select.setVisibility(View.INVISIBLE);
+            karneBilgleriGir();
+
+        }else{
+
+            grp_sinif_select.setVisibility(View.INVISIBLE);
 
 
             if(soru_no<sorusayisi) {
 
-                soru_no = soru_no + 1;
+                soru_no = soru_no + 1;}
 
-            }
 
             soru_id=soru_no;
             if(sinif==1) {sorusayisi=30;
@@ -570,7 +855,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         }//////  eğer soru_no=!-1 ise buraya kadar çalışsın
 
 
-        card_a.setOnClickListener(new View.OnClickListener() {
+        card_a.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -595,7 +880,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         });
 
-        card_b.setOnClickListener(new View.OnClickListener() {
+        card_b.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -621,7 +906,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         });
 
 
-        card_c.setOnClickListener(new View.OnClickListener() {
+        card_c.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -646,7 +931,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         });
 
-        card_d.setOnClickListener(new View.OnClickListener() {
+        card_d.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -874,140 +1159,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
 
-                if(soru_no==sorusayisi){
+                if(soru_no>=sorusayisi){
 
-                    baloncuk_img.setVisibility(View.INVISIBLE);
-                    aciklama_txt.setVisibility(View.INVISIBLE);
-                    tesekkur.setVisibility(View.VISIBLE);
-                    soru_no_kalan_txt.setVisibility(View.INVISIBLE);
-                    soru_no_txt.setVisibility(View.INVISIBLE);
-                    SoruNo_bar_dolan.setVisibility(View.INVISIBLE);
-                    SoruNo_Zemin.setVisibility(View.INVISIBLE);
-                    zaman_bar_zemin.setVisibility(View.INVISIBLE);
-
-                    ad_txt.setVisibility(View.VISIBLE);
-                    soyad_txt.setVisibility(View.VISIBLE);
-                    karne_buton.setVisibility(View.VISIBLE);
-                    checkBox_mail.setVisibility(View.VISIBLE);
-
-                    if(checkBox_mail.isChecked()){
-
-                        email_txt.startAnimation(paylasacik);
-                        email_txt.setVisibility(View.VISIBLE);
-
-                    }
-
-
-                    soru_area.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorseffaf));
-
-
-                    karne_buton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            final int ds = sp.getInt("dogru_sayisi",0);
-                            final String ad=ad_txt.getText().toString();
-                            final String soyad=soyad_txt.getText().toString();
-                            final String email=email_txt.getText().toString();
-
-
-
-                            if(ad!=null){
-                                editor.putString("ad", ad);
-                                editor.commit();
-                            }
-
-                            if(soyad!=null) {
-                                editor.putString("soyad", soyad);
-                                editor.commit();
-                            }
-
-
-                                String url = "https://app.1e1okul.com/bilsemdeneme/Sira.php";
-                                StringRequest postStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-                                    @Override
-                                    public void onResponse(String response) {
-
-                                        Log.e(" şimdi girdik onrespons"," bakalım ne olacak");
-
-
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            JSONArray bilsem_ogrenci = jsonObject.getJSONArray("bilsem_ogrenci");
-                                                JSONObject f = bilsem_ogrenci.getJSONObject(0);
-
-                                            Log.e("girdik tray içine"," bakalım ne olacak");
-
-                                                int sayi = f.getInt("sayi");
-                                                int sira = f.getInt("sira");
-
-                                            if(checkBox_mail.isChecked()){
-
-                                          new SoruDao().mailGonder(MainActivity.this,sinif,ad,soyad,email,sayi,sira,ds,tur1,tur2,tur3,tur4,tur5,tur6,tur7,tur8);
-
-                                            }
-
-
-                                            editor.putInt("sayi",sayi);
-                                                editor.putInt("sira",sira);
-                                                editor.commit();
-
-                                            startActivity(new Intent(MainActivity.this,Sonuc.class));
-                                            finish();
-
-
-
-                                        } catch (JSONException e) {
-                                            Log.e("girdik catch içine"," bakalım ne olacak");
-                                            e.printStackTrace();
-                                        }
-
-
-
-                                    }
-
-
-
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-
-                                    }
-                                }){
-
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-
-                                        Map<String, String> params = new HashMap<>();
-                                        params.put("ad",ad);
-                                        params.put("soyad",soyad);
-                                        params.put("sinif",String.valueOf(sinif));
-                                        params.put("email",email);
-                                        params.put("dogru_sayisi",String.valueOf(ds));
-                                        params.put("tur1",String.valueOf(tur1));
-                                        params.put("tur2",String.valueOf(tur2));
-                                        params.put("tur3",String.valueOf(tur3));
-                                        params.put("tur4",String.valueOf(tur4));
-                                        params.put("tur5",String.valueOf(tur5));
-                                        params.put("tur6",String.valueOf(tur6));
-                                        params.put("tur7",String.valueOf(tur7));
-
-                                        return params;
-                                    }
-
-                                };
-
-
-                                Volley.newRequestQueue(MainActivity.this).add(postStringRequest);
-
-
-                            progress_bekle.setVisibility(View.VISIBLE);
-
-
-                        }
-                    });
-
+                    karneBilgleriGir();
 
                 }else {
 
@@ -1024,6 +1178,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 }
 
 
+
+///// gizliyorum başka yere taşıyacağım sorun olmazsa sileceğim
                 card_soru.setVisibility(View.INVISIBLE);
                 card_a.setClickable(false);
                 card_b.setClickable(false);
@@ -1033,6 +1189,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
             }
+
+
         });
 
 
@@ -1072,7 +1230,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
 
-        sonraki.setOnClickListener(new View.OnClickListener() {
+        sonraki.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,MainActivity.class));
@@ -1081,7 +1239,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             }
         });
 
-        sonraki2.setOnClickListener(new View.OnClickListener() {
+        sonraki2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this,MainActivity.class));
@@ -1092,7 +1250,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
 
 
-        tesekkur.setOnClickListener(new View.OnClickListener() {
+        tesekkur.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -1190,46 +1348,75 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         });
 
 
+    }
 
-        rb1Sinif.setOnClickListener(new View.OnClickListener() {
+    private void odemeControl() {
+
+         mBillingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP, new PurchaseHistoryResponseListener() {
             @Override
-            public void onClick(View view) {
+            public void onPurchaseHistoryResponse( BillingResult billingResult,  List<PurchaseHistoryRecord> list) {
 
-                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                        .setSkuDetails(skuINAPPDetayListesi.get(0))
-                        .build();
+                if(billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null){
 
-                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
+                    int n =1;
+                    String urun1= "[sinif1deneme1]";
+                    String urun2= "[sinif2deneme1]";
+                    String urun3= "[sinif3deneme1a]";
+                    String urunMevcut;
+
+
+                    for ( final PurchaseHistoryRecord purchase : list){
+                        ++n;
+                        urunMevcut = purchase.getSkus().toString();
+
+                        Log.e("urunMevcut",urunMevcut.trim().toString());
+
+                        if (urunMevcut.trim().toString().equals(urun1)) {
+                            odeme1=1;
+                            editor.putInt("odeme1", 1);
+                            editor.commit();
+                            Toast.makeText(getApplicationContext(),"111", Toast.LENGTH_SHORT).show();
+                            Log.e("odeme control","1111");
+                        }
+
+                        if (urunMevcut.trim().toString().equals(urun2.toString())) {
+                            odeme2=1;
+                            editor.putInt("odeme2", 1);
+                            editor.commit();
+                            Toast.makeText(getApplicationContext(),"22222222", Toast.LENGTH_SHORT).show();
+
+                            Log.e("odeme control","22222222");
+
+                        }
+
+                        if (urunMevcut.trim().toString().equals(urun3)) {
+                            odeme3=1;
+                            editor.putInt("odeme3", 1);
+                            editor.commit();
+
+                            Toast.makeText(getApplicationContext(),"3333", Toast.LENGTH_SHORT).show();
+
+                            Log.e("odeme control","3333");
+                        }
+
+
+
+                    }
+
+
+
+
+
+                }
 
             }
         });
 
-        rb2Sinif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                        .setSkuDetails(skuINAPPDetayListesi.get(1))
-                        .build();
+    }
 
-                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
+    private void payvarning() {
 
-            }
-        });
-
-
-        rb3Sinif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                BillingFlowParams flowParams = BillingFlowParams.newBuilder()
-                        .setSkuDetails(skuINAPPDetayListesi.get(3))
-                        .build();
-
-                mBillingClient.launchBillingFlow(MainActivity.this,flowParams);
-
-            }
-        });
 
     }
 
@@ -1239,8 +1426,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         // geri tuşuna dokunulduğunda
         AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
         gu.setIcon(R.drawable.ic_warning_black_24dp);
-        gu.setTitle("Çıkış için \"Evet\" e basın.");
-        gu.setMessage("Başarılar Dileriz");
+
+
+        if(soru_no>-1)  {
+            gu.setTitle("Sınavı Sonlandır!");
+            gu.setMessage("Sınavı yarıda bitirip başa dönmek için\"EVET\"'e basınız. Bu sınavla ilgili verileriniz kaybolacak!!");
+
+        }else {
+            gu.setTitle("Çıkış için \"Evet\" e basın.");
+            gu.setMessage("Başarılar Dileriz...");
+        }
 
 
         gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
@@ -1249,8 +1444,8 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                 editor.remove("sinif");
                 editor.remove("dogru_sayisi");
-                editor.remove("soru_no");
                 editor.remove("sorusayisi");
+                editor.remove("soru_no");
                 editor.remove("tur");
                 editor.remove("tur1");
                 editor.remove("tur2");
@@ -1260,14 +1455,15 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 editor.remove("tur6");
                 editor.remove("tur7");
                 editor.remove("tur8");
-
                 editor.remove("aciklama");
                 editor.remove("SinavBilgisi");
                 editor.commit();
 
-
+                if(soru_no>-1) startActivity(new Intent(MainActivity.this,MainActivity.class));
 
                 finish();
+
+
 
             }
         });
@@ -1281,25 +1477,28 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         });
 
+
+
         gu.create().show();
 
         // super.onBackPressed();
     }
     private void buttonlarinDurumuDegistir(boolean durum){
 
-        rb1Sinif.setSelected(durum);
-        rb2Sinif.setSelected(durum);
-        rb3Sinif.setSelected(durum);
+       // rb1Sinif.setSelected(durum);
+       // rb2Sinif.setSelected(durum);
+       // rb3Sinif.setSelected(durum);
 
 
-       // rb1Sinif.setEnabled(durum);
-        //rb2Sinif.setEnabled(durum);
-        //rb3Sinif.setEnabled(durum);
+        bt_1sinif.setEnabled(durum);
+        bt_2sinif.setEnabled(durum);
+        bt_3sinif.setEnabled(durum);
 
            }
 
     @Override
     public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> list) {
+
         if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK && list != null) {
 
             for (Purchase purchase : list) {
@@ -1310,44 +1509,206 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                             .build();
                 }
 
-                if (purchase.getSkus().equals("sinif1deneme1")) {
-                    rb1Sinif.setChecked(true);
-                    sinif=11;
-                    editor.putInt("sinif", sinif);
+                if (String.valueOf(purchase.getSkus()).equals("[sinif1deneme1]")) {
+                    odeme1=1;
+                    editor.putInt("odeme1", 1);
                     editor.commit();
+                    String url1sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/1sinifopen.png";
+                  if(bt_1sinif.getVisibility()==View.VISIBLE)  Picasso.with(this).load(url1sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_1sinif);
+
+                   // startActivity(new Intent(MainActivity.this,MainActivity.class));
+                   // finish();
+                   Toast.makeText(getApplicationContext(), "1.Sınıf Deneme Satın Alındı", Toast.LENGTH_SHORT).show();
+
                 }
 
-                if (purchase.getSkus().equals("sinif2deneme1")) {
-                    rb2Sinif.setChecked(true);
-                    sinif=21;
-                    editor.putInt("sinif", sinif);
+                if (String.valueOf(purchase.getSkus()).equals("[sinif2deneme1]")) {
+                    odeme2=1;
+                    editor.putInt("odeme2", 1);
                     editor.commit();
+                    String url2sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/2sinifopen.png";
+                    if(bt_1sinif.getVisibility()==View.VISIBLE)  Picasso.with(this).load(url2sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_2sinif);
+
+                   Toast.makeText(getApplicationContext(), "2.Sınıf Deneme Satın Alındı", Toast.LENGTH_SHORT).show();
+
+
+
+                    // startActivity(new Intent(MainActivity.this,MainActivity.class));
+                  //  finish();
+
                 }
 
-                if (purchase.getSkus().equals("sinif3deneme1a")) {
-                    rb3Sinif.setChecked(true);
-                    sinif=31;
-                    editor.putInt("sinif", sinif);
+                if (String.valueOf(purchase.getSkus()).equals("[sinif3deneme1a]")) {
+                   odeme3=1;
+                   editor.putInt("odeme3", 1);
                     editor.commit();
-                }
+                    String url3sinifopen = "https://app.1e1okul.com/bilsemdeneme/resim/3sinifopen.png";
+                    if(bt_1sinif.getVisibility()==View.VISIBLE)  Picasso.with(this).load(url3sinifopen).resize(genislik / 8, genislik / 8).centerInside().into(bt_3sinif);
+                   Toast.makeText(getApplicationContext(), "3.Sınıf Deneme Satın Alındı", Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getApplicationContext(), purchase.getSkus() + ": Ürün satın alındı.", Toast.LENGTH_SHORT).show();
+                    // startActivity(new Intent(MainActivity.this,MainActivity.class));
+                   // finish();
+
+                }
 
             }
 
+/*
+            AlertDialog.Builder gu = new AlertDialog.Builder(MainActivity.this);
+            gu.setIcon(R.drawable.ic_yes_icon);
+            gu.setTitle("Tebrikler");
+            gu.setMessage("Yeni bir deneme sınavı satın aldınız. Dilerseniz hemen başlamak için giriş sayfasına dönebilirsiniz. ");
+
+            gu.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    editor.remove("sinif");
+                    editor.remove("dogru_sayisi");
+                    editor.remove("soru_no");
+                    editor.remove("sorusayisi");
+                    editor.remove("tur");
+                    editor.remove("tur1");
+                    editor.remove("tur2");
+                    editor.remove("tur3");
+                    editor.remove("tur4");
+                    editor.remove("tur5");
+                    editor.remove("tur6");
+                    editor.remove("tur7");
+                    editor.remove("tur8");
+
+
+                    editor.remove("aciklama");
+                    editor.remove("SinavBilgisi");
+                    editor.commit();
+
+                    startActivity(new Intent(MainActivity.this,MainActivity.class));
+                    finish();
+
+                }
+            });
+
+
+            gu.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+
+                }
+
+            });
+
+
+            gu.create().show();   */
+
+            //Toast.makeText(getApplicationContext(), purchase.getSkus() + ": Ürün satın alındı.", Toast.LENGTH_SHORT).show();
+
         }
+
+
 
 
         if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
 
             Toast.makeText(getApplicationContext(), "Ödeme iptal edildi", Toast.LENGTH_SHORT).show();
-            sinif = 0;
-            editor.putInt("sinif", sinif);
-            editor.commit();
-            rb1Sinif.setChecked(false);
-            rb2Sinif.setChecked(false);
-            rb3Sinif.setChecked(false);
+            // nopay();
 
+        }
+
+
+    }
+
+
+
+
+/*
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.bt_1sinif:
+
+                Log.e("bt_1sinif","bana dokunuldu");
+                // do your code
+                break;
+            case R.id.bt_2sinif:
+                Log.e("bt_2sinif","bana dokunuldu");
+                break;
+            case R.id.bt_3sinif:
+                // do your code
+                break;
+            case R.id.bt_1sinifFree:
+                // do your code
+                break;
+            case R.id.bt_2sinifFree:
+                // do your code
+                break;
+            case R.id.bt_3sinifFree:
+                // do your code
+                break;
+            default:
+                break;
+        }*/
+
+
+
+    public void nopay(){
+        sinif = 0;
+        editor.putInt("sinif", sinif);
+        editor.commit();
+        rb1Sinif.setChecked(false);
+        rb2Sinif.setChecked(false);
+        rb3Sinif.setChecked(false);
+    }
+
+    public void forceUpdate(int version){
+
+        final int prod_version = 20;
+
+        if(prod_version != version){
+
+            String url = "https://app.1e1okul.com/bilsemdeneme/get_version.php";
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+
+                        JSONArray kategoriArray = jsonObject.getJSONArray("version");
+                        Log.e("KatDao.GetirWeb","kategoriler alındı mı?");
+
+                        for(int i=0;i<kategoriArray.length();i++){
+                            JSONObject k = kategoriArray.getJSONObject(i);
+
+                            int new_version = k.getInt("version");
+                            if (prod_version < new_version){  startActivity(new Intent(MainActivity.this,Force.class));
+                                finish();
+                            } else {
+                                editor.putInt("version", new_version);
+                                editor.commit();
+                            }
+
+                            Log.e("gelen version"," "+ new_version);
+
+                        }
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                }
+            });
+
+
+            Volley.newRequestQueue(this).add(stringRequest);
 
         }
 
@@ -1356,56 +1717,236 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     }
 
-    public void forceUpdate(int version){
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        final int prod_version = 13;
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 
-        if(prod_version != version){
+    private void karneBilgleriGir() {
 
-        String url = "https://app.1e1okul.com/bilsemdeneme/get_version.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
+            baloncuk_img.setVisibility(View.INVISIBLE);
+            aciklama_txt.setVisibility(View.INVISIBLE);
+            tesekkur.setVisibility(View.VISIBLE);
+            soru_no_kalan_txt.setVisibility(View.INVISIBLE);
+            soru_no_txt.setVisibility(View.INVISIBLE);
+            SoruNo_bar_dolan.setVisibility(View.INVISIBLE);
+            SoruNo_Zemin.setVisibility(View.INVISIBLE);
+            zaman_bar_zemin.setVisibility(View.INVISIBLE);
 
-                    JSONArray kategoriArray = jsonObject.getJSONArray("version");
-                    Log.e("KatDao.GetirWeb","kategoriler alındı mı?");
+            ad_txt.setVisibility(View.VISIBLE);
+            soyad_txt.setVisibility(View.VISIBLE);
+            karne_buton.setVisibility(View.VISIBLE);
+            checkBox_mail.setVisibility(View.VISIBLE);
 
-                    for(int i=0;i<kategoriArray.length();i++){
-                        JSONObject k = kategoriArray.getJSONObject(i);
 
-                        int new_version = k.getInt("version");
-                        if (prod_version < new_version){  startActivity(new Intent(MainActivity.this,Force.class));
-                            finish();
-                        } else {
-                            editor.putInt("version", new_version);
-                            editor.commit();
-                        }
+        if (ContextCompat.checkSelfPermission(MainActivity.this, WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{WRITE_EXTERNAL_STORAGE},
+                    1);
+        }
 
-                        Log.e("gelen version"," "+ new_version);
 
+        /*    //// klasör oluşturma izin için
+
+        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File myDir = new File(root + "/BilsemDeneme");
+
+        Log.e("Main.KarneBilgilerigir", "Oluşan klasör yolu: " + myDir);
+        myDir.mkdirs();
+
+            //// klasör oluşturma izin için/**/
+
+            if(checkBox_mail.isChecked()){
+
+                email_txt.startAnimation(paylasacik);
+                email_txt.setVisibility(View.VISIBLE);
+
+            }
+
+
+            soru_area.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorseffaf));
+
+
+            karne_buton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    final int ds = sp.getInt("dogru_sayisi",0);
+                    final String ad=ad_txt.getText().toString();
+                    final String soyad=soyad_txt.getText().toString();
+                    final String email=email_txt.getText().toString();
+
+
+                    if(ad!=null){
+
+                        editor.putString("ad", ad);
+                        editor.commit();
+                    }
+
+                    if(soyad!=null) {
+                        editor.putString("soyad", soyad);
+                        editor.commit();
                     }
 
 
+                    String url = "https://app.1e1okul.com/bilsemdeneme/Sira.php";
+                    StringRequest postStringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.e(" şimdi girdik onrespons"," bakalım ne olacak");
+
+
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                JSONArray bilsem_ogrenci = jsonObject.getJSONArray("bilsem_ogrenci");
+                                JSONObject f = bilsem_ogrenci.getJSONObject(0);
+
+                                Log.e("girdik tray içine"," bakalım ne olacak");
+
+                                int sayi = f.getInt("sayi");
+                                int sira = f.getInt("sira");
+
+                                if(checkBox_mail.isChecked()){
+
+                                    new SoruDao().mailGonder(MainActivity.this,sinif,ad,soyad,email,sayi,sira,ds,tur1,tur2,tur3,tur4,tur5,tur6,tur7,tur8);
+
+                                }
+
+
+                                editor.putInt("sayi",sayi);
+                                editor.putInt("sira",sira);
+                                editor.commit();
+
+                                startActivity(new Intent(MainActivity.this,Sonuc.class));
+                                finish();
+
+
+
+                            } catch (JSONException e) {
+                                Log.e("girdik catch içine"," bakalım ne olacak");
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+
+
+
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }){
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+
+                            Map<String, String> params = new HashMap<>();
+                            params.put("ad",ad);
+                            params.put("soyad",soyad);
+                            params.put("sinif",String.valueOf(sinif));
+                            params.put("email",email);
+                            params.put("dogru_sayisi",String.valueOf(ds));
+                            params.put("tur1",String.valueOf(tur1));
+                            params.put("tur2",String.valueOf(tur2));
+                            params.put("tur3",String.valueOf(tur3));
+                            params.put("tur4",String.valueOf(tur4));
+                            params.put("tur5",String.valueOf(tur5));
+                            params.put("tur6",String.valueOf(tur6));
+                            params.put("tur7",String.valueOf(tur7));
+
+                            return params;
+                        }
+
+                    };
+
+
+                    Volley.newRequestQueue(MainActivity.this).add(postStringRequest);
+
+
+                    progress_bekle.setVisibility(View.VISIBLE);
+
                 }
+            });
 
+    }
+
+
+
+    private boolean checkPermission() {
+
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+
+            return Environment.isExternalStorageManager();
+        } else {
+
+            int result = ContextCompat.checkSelfPermission(MainActivity.this, READ_EXTERNAL_STORAGE);
+            int result1 = ContextCompat.checkSelfPermission(MainActivity.this, WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED && result1== PackageManager.PERMISSION_GRANTED;
+        }
+
+    }
+
+    /*
+
+
+
+    private void requestPermission() {
+        if (SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData(Uri.parse(String.format("package:%s",getApplicationContext().getPackageName())));
+                startActivityForResult(intent, 2296);
+            } catch (Exception e) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivityForResult(intent, 2296);
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        } else {
+            //below android 11
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2296) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
+                if (Environment.isExternalStorageManager()) {
+                    // perform action when allow permission success
+                } else {
+                    Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show();
+                }
             }
-        });
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    boolean READ_EXTERNAL_STORAGE = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean WRITE_EXTERNAL_STORAGE = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-        Volley.newRequestQueue(this).add(stringRequest);
-
-    }}
+                    if (READ_EXTERNAL_STORAGE && WRITE_EXTERNAL_STORAGE) {
+                        // perform action when allow permission success
+                    } else {
+                        Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+        }
+    }   */
 
 
 
