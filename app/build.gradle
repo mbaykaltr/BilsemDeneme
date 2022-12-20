@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.info.bilsemdeneme"
         minSdkVersion 19
         multiDexEnabled true
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 29
         versionName "3.9"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
