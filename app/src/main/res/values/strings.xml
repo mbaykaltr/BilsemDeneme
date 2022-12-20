@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Bilsem Deneme</string>
     <string name="force_update_text">Uygulama güncellenmiştir. \n\n\n Uygulamayı kullanabilmeniz için güncel sürümünü kurmalısınız. </string>
-    <string name="veli_aciklama">\t\t Sayın Öğretmenler, Veliler;\n\n
+    <string name="veli_aciklama">\t\t Sayın Veliler;\n\n
 
-            \t\t Bu uygulama ilkokul 1, 2 ve 3. sınıf öğrencileri için hazırlanmış online mini deneme sınavları içemektedir.\n\n
+            \t\t Bu uygulama ilkokul 1, 2, 3 ve 4. sınıf öğrencileri için hazırlanmış online mini deneme sınavları içemektedir.\n\n
 
 
         \t\tBu sınavlar, Milli Eğitim Bakanlığının üstün yetenekli çocukları tespit etmek için yapmış olduğu
@@ -11,13 +11,11 @@
 
 
         \t\tHer sınıf için birer adet ücretli olmak üzere ikişer deneme sınavı mevcuttur.\n\n
-        \t\tÜcretli sınavlar için ücretlendirme her bir çözüm için yapılmaktadır ancak ödeme yapan kullanıcılarımız sistem izin verdiği sürece deneme sınavlarını farklı öğrenciler için de kullanabileceklerdir. \n\n
-        \t\tSatın aldığınız sınavı kullanmadan lütfen uygulamayı cihazınızdan kaldırmayın. Uygulamayı kaldırdığınızda satın aldığınız sınavlar kullanılmaz olacaktır.\n\n
         \t\tİlkokul 1. sınıf için 30 diğer sınıflar için 35 adet soru bulunan bu sınavda her soru bir dakika içerisinde çözülmelidir.
     Bir dakikalık süre aşıldığında soruya cevap verilememektedir.\n\n
         \t\tSınavda soru tarzı değiştiğinde ihtiyaç duyulan yönergeler soruların solundaki baloncuklarda verilmektedir.
         Okumakta güçlük çeken ya da yeterince hızlı okuyamayan öğrencilere soruları anlamaları için yardımcı olabilirsiniz. \n\n
-       \t\tSınavda İlkokul 1. sınıflar için 7 kategori, 2 ve 3. sınıflar için 8 kategoride soru bulunmaktadır. Bu kategoriler sırasıyla;\n\n
+       \t\tSınavda İlkokul 1. sınıflar için 7 kategori, 2 ,3 ve 4. sınıflar için 8 kategoride soru bulunmaktadır. Bu kategoriler sırasıyla;\n\n
 
         1- Bellek Kullanımı\n
         2- Kavram İlişkisi\n
@@ -26,7 +24,7 @@
         5- Şekil Gölge İlişkisi\n
         6- Üç Boyutlu Düşünme\n
         7- Şifre Çözme\n
-        8- Sözel Dikkat (2. ve 3. sınıflar için)\n\n
+        8- Sözel Dikkat (2, 3 ve 4. sınıflar için)\n\n
 
 
     \t\tSınav ortalama 20 dakika sürmektedir ve sınav sonunda öğrencinin başarı durumu ile ilgili genel bir rapor sunulmaktadır.
@@ -34,5 +32,12 @@
     \t\tÖğrenci sınava hazır olduğunda sağ traftaki butonlara basarak sınavı başlatabilirsiniz.\n\n
         \t\tBaşarılar dileriz...\n\n\n\n
 
+
   </string>
+
+    <string name="test_ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="first_ad_id">ca-app-pub-2950778645664553/2460885142</string>
+    <string name="app_ad_id">ca-app-pub-2950778645664553~3142366879</string>
+
+
 </resources>

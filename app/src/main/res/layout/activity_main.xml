@@ -128,6 +128,15 @@
                                 android:text="Hikaye metni"
                                 android:textAlignment="textStart"
                                 android:textColor="@color/cardview_light_background" />
+
+                            <ImageView
+                                android:id="@+id/ivsorularagec"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="30dp"
+                                app:srcCompat="@drawable/sorularagec" />
+
                         </LinearLayout>
                     </ScrollView>
 
@@ -489,192 +498,124 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/baslat_buton"
+    <ScrollView
+        android:id="@+id/scr_butonlar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/rdySinif"
-        app:layout_constraintEnd_toStartOf="@id/rdySinif"
-        app:layout_constraintTop_toTopOf="@+id/scrool"
-        app:layout_constraintVertical_bias="0.17000002"
-        app:srcCompat="@drawable/baslat_buton_img" />
-
-    <ImageView
-        android:id="@+id/bt_1sinif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorseffaf"
-        android:contextClickable="true"
-        android:text="1. Sınıf"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bt_1sinifFree"
-        app:layout_constraintTop_toTopOf="@id/bt_1sinifFree"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <ImageView
-        android:id="@+id/bt_2sinif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorseffaf"
-        android:text="2. Sınıf"
-        app:layout_constraintEnd_toEndOf="@+id/bt_1sinif"
-        app:layout_constraintStart_toStartOf="@+id/bt_1sinif"
-        app:layout_constraintTop_toBottomOf="@+id/bt_1sinif"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <ImageView
-        android:id="@+id/bt_3sinif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorseffaf"
-        android:text="3. Sınıf"
-        app:layout_constraintEnd_toEndOf="@+id/bt_2sinif"
-        app:layout_constraintStart_toStartOf="@+id/bt_2sinif"
-        app:layout_constraintTop_toBottomOf="@+id/bt_2sinif"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <ImageView
-        android:id="@+id/bt_1sinifFree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorseffaf"
-        android:text="1. Sınıf"
-        app:layout_constraintEnd_toStartOf="@id/rdySinif"
-        app:layout_constraintStart_toEndOf="@+id/scrool"
-        app:layout_constraintTop_toBottomOf="@+id/baslik1_txt"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <ImageView
-        android:id="@+id/bt_2sinifFree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorseffaf"
-        android:text="2. Sınıf"
-        app:layout_constraintEnd_toEndOf="@+id/bt_1sinifFree"
-        app:layout_constraintStart_toStartOf="@+id/bt_1sinifFree"
-        app:layout_constraintTop_toBottomOf="@+id/bt_1sinifFree"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <ImageView
-        android:id="@+id/bt_3sinifFree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@color/colorseffaf"
-        android:text="3. Sınıf"
-        app:layout_constraintEnd_toEndOf="@+id/bt_2sinifFree"
-        app:layout_constraintStart_toStartOf="@+id/bt_2sinifFree"
-        app:layout_constraintTop_toBottomOf="@+id/bt_2sinifFree"
-        app:srcCompat="@drawable/ic_money_red_24dp" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/grp_sinif_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="411dp"
-        app:constraint_referenced_ids="bt_1sinif,bt_2sinif,bt_2sinifFree,bt_1sinifFree,bt_3sinifFree,bt_3sinif"
+        android:layout_marginBottom="16dp"
+        android:alwaysDrawnWithCache="true"
+        android:animateLayoutChanges="false"
+        android:animationCache="false"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <RadioGroup
-        android:id="@+id/rdySinif"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/fon_img"
-        app:layout_constraintTop_toTopOf="@+id/baslik2_txt">
-
-        <TextView
-            android:id="@+id/tv_rb_sinif1"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1. Sınıf"
-            android:textColor="@color/colorAccent"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rb1SinifFree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary" />
+            <ImageView
+                android:id="@+id/bt_1sinif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="32dp"
+                android:background="@color/colorseffaf"
+                android:contextClickable="true"
+                android:text="1. Sınıf"
+                app:layout_constraintStart_toEndOf="@+id/bt_1sinifFree"
+                app:layout_constraintTop_toTopOf="@+id/bt_1sinifFree"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <RadioButton
-            android:id="@+id/rb1Sinif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ücretli"
-            android:textColor="?android:attr/textColorPrimary" />
+            <ImageView
+                android:id="@+id/bt_2sinif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorseffaf"
+                android:text="2. Sınıf"
+                app:layout_constraintStart_toStartOf="@+id/bt_1sinif"
+                app:layout_constraintTop_toBottomOf="@+id/bt_1sinif"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <TextView
-            android:id="@+id/tv_rb_sinif2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="2. Sınıf"
-            android:textColor="@color/colorAccent"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/bt_3sinif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorseffaf"
+                android:text="3. Sınıf"
+                app:layout_constraintStart_toStartOf="@+id/bt_2sinif"
+                app:layout_constraintTop_toBottomOf="@+id/bt_2sinif"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <RadioButton
-            android:id="@+id/rb2SinifFree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary" />
+            <ImageView
+                android:id="@+id/bt_4sinif"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorseffaf"
+                android:text="4. Sınıf"
+                app:layout_constraintStart_toStartOf="@+id/bt_3sinifFree"
+                app:layout_constraintTop_toBottomOf="@+id/bt_3sinifFree"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <RadioButton
-            android:id="@+id/rb2Sinif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ücretli"
-            android:textColor="?android:attr/textColorPrimary" />
+            <ImageView
+                android:id="@+id/bt_1sinifFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorseffaf"
+                android:text="1. Sınıf"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <TextView
-            android:id="@+id/tv_rb_sinif3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="3. Sınıf"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/bt_2sinifFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorseffaf"
+                android:text="2. Sınıf"
+                app:layout_constraintStart_toStartOf="@+id/bt_1sinifFree"
+                app:layout_constraintTop_toBottomOf="@+id/bt_1sinifFree"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <RadioButton
-            android:id="@+id/rb3SinifFree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="?android:attr/textColorPrimary" />
+            <ImageView
+                android:id="@+id/bt_3sinifFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorseffaf"
+                android:text="3. Sınıf"
+                app:layout_constraintStart_toStartOf="@+id/bt_2sinifFree"
+                app:layout_constraintTop_toBottomOf="@+id/bt_2sinifFree"
+                app:srcCompat="@drawable/ic_money_red_24dp" />
 
-        <RadioButton
-            android:id="@+id/rb3Sinif"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ücretli"
-            android:textColor="?android:attr/textColorPrimary" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-    </RadioGroup>
 
     <TextView
         android:id="@+id/baslik1_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
         android:text="BİLSEM"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintEnd_toEndOf="@+id/scrool"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
 
@@ -682,16 +623,16 @@
         android:id="@+id/baslik2_txt"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="73dp"
         android:text="( BİLİM VE SANAT MERKEZLERİNE HAZIRLIK )\nDENEME SINAVI"
         android:textAlignment="center"
         android:textColor="#829370"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/scr_butonlar"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baslik1_txt" />
 
@@ -701,20 +642,20 @@
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:fadeScrollbars="false"
         android:padding="12dp"
         android:scrollbarStyle="insideInset"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/baslat_buton"
+        app:layout_constraintEnd_toStartOf="@+id/scr_butonlar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/baslik2_txt">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/sinav_aciklama_txt"
@@ -723,6 +664,23 @@
                 android:text="@string/veli_aciklama"
                 android:textColor="@color/colorC"
                 android:visibility="invisible" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_kavanoz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_money_red_24dp"
+                    android:contentDescription="TODO" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
 
