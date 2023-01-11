@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.info.bilsemdeneme"
         minSdkVersion 19
         multiDexEnabled true
-        targetSdkVersion 33
-        versionCode 29
-        versionName "3.9"
+        targetSdkVersion 31
+        versionCode 30
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
@@ -39,18 +39,20 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.android.support.test:runner:1.0.2'
-    implementation 'androidx.test:runner:1.5.1'
+    implementation 'androidx.test:runner:1.5.2'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.billingclient:billing:5.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'junit:junit:4.13.2'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'com.google.android.gms:play-services-ads:21.4.0'
     implementation 'com.android.support:multidex:1.0.3'
+
+
 
 
 }

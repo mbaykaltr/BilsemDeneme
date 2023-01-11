@@ -1,5 +1,12 @@
 package com.info.bilsemdeneme;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.info.bilsemdeneme.R.raw.basla;
+import static com.info.bilsemdeneme.R.raw.bitis;
+import static com.info.bilsemdeneme.R.raw.bozukpara;
+import static com.info.bilsemdeneme.R.raw.decidemp;
+import static com.info.bilsemdeneme.R.raw.olumsuz;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -66,13 +73,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static com.info.bilsemdeneme.R.raw.basla;
-import static com.info.bilsemdeneme.R.raw.bitis;
-import static com.info.bilsemdeneme.R.raw.bozukpara;
-import static com.info.bilsemdeneme.R.raw.decidemp;
-import static com.info.bilsemdeneme.R.raw.olumsuz;
 
 public class MainActivity extends AppCompatActivity implements PurchasesUpdatedListener {
 
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                         }
                     });
 
-
+/*   // Bu aaralıkta üyelik sistemi satınalma var. bu pasifleme kaldırılacaksa aynı satırı aşağıdan da kaldır
                     List<String> skuListSUBS = new ArrayList<>();
 
                     skuListSUBS.add("sinif3deneme1");
@@ -367,10 +367,10 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                         }
                     });
-
+*/   // Bu aaralıkta üyelik sistemi satınalma var. bu pasifleme kaldırılacaksa aynı satırı aşağıdan da kaldır
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
                     Log.e("MainAct. BillingResp", "Ödeme sisteminde bir sorun olabilir google play hesabını kontrol ediniz");
                     // nopay();
                     buttonlarinDurumuDegistir(false);
@@ -1579,7 +1579,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     public void forceUpdate(int version) {
 
-        final int prod_version = 29;
+        final int prod_version = 30;
 
         if (prod_version != version) {
 

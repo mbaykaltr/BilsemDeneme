@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
@@ -81,21 +81,25 @@ public class Start extends AppCompatActivity {
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
             }
         });
 
+/*/ reklamı bir süreliğine kaldırdık
         mAdView = findViewById(R.id.AV_Banner);
         AdRequest adRequest = new AdRequest.Builder().build();
 
 
+
+
         try {
             mAdView.loadAd(adRequest);
+            Log.e("reklamda","Hata yok: ");
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("reklam hatası,","Hata: "+e);
         }
-
+*/  //reklamı bir süreliğine kaldırdık
 
         n=2;
         tv_ready.setAnimation(vibration);
