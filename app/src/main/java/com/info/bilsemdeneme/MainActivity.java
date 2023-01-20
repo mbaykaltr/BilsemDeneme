@@ -45,8 +45,6 @@ import androidx.core.content.ContextCompat;
 import com.android.billingclient.api.AcknowledgePurchaseParams;
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
 import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingFlowParams;
 import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.ConsumeParams;
 import com.android.billingclient.api.ConsumeResponseListener;
@@ -55,8 +53,6 @@ import com.android.billingclient.api.PurchaseHistoryRecord;
 import com.android.billingclient.api.PurchaseHistoryResponseListener;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetails;
-import com.android.billingclient.api.SkuDetailsParams;
-import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -101,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
     private List<SkuDetails> skuINAPPDetayListesi = new ArrayList<>();
     private List<SkuDetails> skuSUBSDetayListesi = new ArrayList<>();
     private MediaPlayer msound;
+    private ConstraintLayout  soru_aciklama, soru_main , soru_info;
 
 
     @Override
@@ -150,6 +147,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
         sinav_aciklama_txt = findViewById(R.id.sinav_aciklama_txt);
         baslik1_txt = findViewById(R.id.baslik1_txt);
         baslik2_txt = findViewById(R.id.baslik2_txt);
+        soru_aciklama = findViewById(R.id.soru_aciklama);
+        soru_main = findViewById(R.id.soru_main);
+        soru_info = findViewById(R.id.soru_info);
+
+
 
         scrool = findViewById(R.id.scrool);
         hikaye_scrool = findViewById(R.id.hikaye_scrool);
@@ -284,7 +286,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
         }
 
-        mBillingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build();
+
+
+       // mBillingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build();
+
+       /*
         AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
 
 
@@ -308,88 +314,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
             }
         };
-
-
-        mBillingClient.startConnection(new BillingClientStateListener() {
-
-
-            @Override
-            public void onBillingSetupFinished(BillingResult billingResult) {
-
-
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-
-                    buttonlarinDurumuDegistir(true);
-
-                    List<String> skuListINAPP = new ArrayList<>();
-
-                    Log.e("MainAct. BillingResp", "Ödeme sisteminde sorun yok");
-
-                    //skuListINAPP.add("support");
-                    skuListINAPP.add("sinif1deneme1");
-                    skuListINAPP.add("sinif2deneme1");
-                    skuListINAPP.add("sinif3deneme1a");
-                    skuListINAPP.add("sinif4deneme1");
-
-
-
-                    SkuDetailsParams.Builder paramsINAPP = SkuDetailsParams.newBuilder();
-
-                    paramsINAPP.setSkusList(skuListINAPP).setType(BillingClient.SkuType.INAPP);
-
-                    odemeControl();
-
-
-
-                    mBillingClient.querySkuDetailsAsync(paramsINAPP.build(), new SkuDetailsResponseListener() {
-                        @Override
-                        public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> list) {
-
-                            skuINAPPDetayListesi = list;
-
-                        }
-                    });
-
-/*   // Bu aaralıkta üyelik sistemi satınalma var. bu pasifleme kaldırılacaksa aynı satırı aşağıdan da kaldır
-                    List<String> skuListSUBS = new ArrayList<>();
-
-                    skuListSUBS.add("sinif3deneme1");
-
-                    SkuDetailsParams.Builder paramsSUBS = SkuDetailsParams.newBuilder();
-
-                    paramsSUBS.setSkusList(skuListSUBS).setType(BillingClient.SkuType.SUBS);
-
-                    mBillingClient.querySkuDetailsAsync(paramsSUBS.build(), new SkuDetailsResponseListener() {
-                        @Override
-                        public void onSkuDetailsResponse(BillingResult billingResult, List<SkuDetails> list) {
-
-                            skuSUBSDetayListesi = list;
-
-                        }
-                    });
-*/   // Bu aaralıkta üyelik sistemi satınalma var. bu pasifleme kaldırılacaksa aynı satırı aşağıdan da kaldır
-
-                } else {
-                    //Toast.makeText(getApplicationContext(), "Ödeme sistemi için google play hesabını kontrol ediniz", Toast.LENGTH_SHORT).show();
-                    Log.e("MainAct. BillingResp", "Ödeme sisteminde bir sorun olabilir google play hesabını kontrol ediniz");
-                    // nopay();
-                    buttonlarinDurumuDegistir(false);
-                }
-
-            }
-
-            @Override
-            public void onBillingServiceDisconnected() {
-
-                //Toast.makeText(getApplicationContext(), "Ödeme sistemi şuanda geçerli değil", Toast.LENGTH_SHORT).show();
-                Log.e("MainAct. BillingResp", "Ödeme sistemi şuanda geçerli değil");
-                //nopay();
-                buttonlarinDurumuDegistir(false);
-
-            }
-
-
-        });
+        */
 
 
 
@@ -412,9 +337,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
             scrool.setVisibility(View.VISIBLE);
 
 
-
+/*///satış iptal
             odemeControl();
+/*///satış iptal
 
+            butonDurumlari();   //Eğer üstteki ödeme kontrol satış iptalinden vaz geçilir ve aktif edilirse bu satır silinmeli
 
 
 
@@ -447,12 +374,14 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
                     if (odeme1 == 0) {
 
+                        /*///satış iptal
+
                         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                                 .setSkuDetails(skuINAPPDetayListesi.get(0))
                                 .build();
 
                         mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
-
+/*///satış iptal
 
 
 
@@ -466,12 +395,15 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 public void onClick(View view) {
 
                     if (odeme2 == 0) {
+
+                        /*///satış iptal
                         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
 
                                 .setSkuDetails(skuINAPPDetayListesi.get(1))
                                 .build();
 
                         mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
+                        /*///satış iptal
 
                     } else {baslat(21); }
 
@@ -484,13 +416,16 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                 public void onClick(View view) {
 
                     if (odeme3 == 0) {
-
+/*///satış iptal
 
                         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                                 .setSkuDetails(skuINAPPDetayListesi.get(2))
                                 .build();
 
                         mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
+
+
+ /*///satış iptal
 
                     } else {baslat(31);}
 
@@ -506,13 +441,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                     //test için
 
                     if (odeme4 == 0) {
-
+/*///satış iptal
                         BillingFlowParams flowParams = BillingFlowParams.newBuilder()
                                 .setSkuDetails(skuINAPPDetayListesi.get(3))
                                 .build();
 
                         mBillingClient.launchBillingFlow(MainActivity.this, flowParams);
-
+/*///satış iptal
                     } else {baslat(41); }
 
                 }
@@ -649,8 +584,13 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
                         if (aciklama.equals(f.getString("aciklama"))) {
 
 
+                          card_soru.setPaddingRelative(0,16,45,16);
+
+
 
                         } else {
+
+                            card_soru.setPaddingRelative(32,16,32,16);
 
                             editor.putInt("tur", f.getInt("tur"));
                             editor.putString("aciklama", f.getString("aciklama"));
@@ -1449,7 +1389,9 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     }
 
-    @Override
+
+
+    // satış ile ilgili @Override
     public void onPurchasesUpdated(BillingResult billingResult, List<Purchase> list) {
 
 
@@ -1577,9 +1519,11 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     }
 
+
+
     public void forceUpdate(int version) {
 
-        final int prod_version = 30;
+        final int prod_version = 32;
 
         if (prod_version != version) {
 

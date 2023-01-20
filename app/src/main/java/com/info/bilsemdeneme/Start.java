@@ -11,15 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.squareup.picasso.Picasso;
 
 
@@ -31,8 +23,8 @@ public class Start extends AppCompatActivity {
     private int n,genislik,yukseklik;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    private AdRequest adRequest;
-    private AdView mAdView;
+    //private AdRequest adRequest;
+   // private AdView mAdView;
 
 
 
@@ -71,19 +63,19 @@ public class Start extends AppCompatActivity {
 
         String urlbslt = "https://app.1e1okul.com/bilsemdeneme/resim/baslat_buton_g.png";
         Picasso.with(this).load(urlbslt).resize(genislik /4, genislik / 4).centerInside().into(iv_start);
-       // tv_ready.setScaleX(20*genislik/50);
+        // tv_ready.setScaleX(20*genislik/50);
         //iv_start.setScaleX(25*genislik/50);
 
 
-        tv_ready.setTextSize((2 * punto) / 3);
+        tv_ready.setTextSize(punto);
 
 
-
+/*
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
             }
-        });
+        });  */
 
 /*/ reklamı bir süreliğine kaldırdık
         mAdView = findViewById(R.id.AV_Banner);
