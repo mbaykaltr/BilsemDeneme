@@ -4,11 +4,11 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "com.info.bilsemdeneme"
-        minSdkVersion 19
+        minSdkVersion 24
         multiDexEnabled true
         targetSdkVersion 33
-        versionCode 32
-        versionName "4.2"
+        versionCode 33
+        versionName "4.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
@@ -24,19 +24,20 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    namespace 'com.info.bilsemdeneme'
 
-    }
+}
 
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
 
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'com.android.support.test:runner:1.0.2'
     implementation 'androidx.test:runner:1.5.2'
     implementation 'com.android.support.test.espresso:espresso-core:3.0.2'

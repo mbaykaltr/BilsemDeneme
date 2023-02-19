@@ -1523,7 +1523,7 @@ public class MainActivity extends AppCompatActivity implements PurchasesUpdatedL
 
     public void forceUpdate(int version) {
 
-        final int prod_version = 32;
+        final int prod_version = 33;
 
         if (prod_version != version) {
 
